@@ -1,152 +1,126 @@
 <template>
-  <div
-    class="min-h-screen app-container font-sans relative overflow-hidden flex items-center justify-center p-6"
-  >
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-[#1a73e8] via-[#0766ff] to-[#40a9ff] z-0"
-    ></div>
-
-    <main
-      class="w-full max-w-sm bg-white rounded-3xl p-10 shadow-2xl z-10 animate-slide-up"
-    >
-      <header class="text-center mb-10">
-        <div class="flex justify-center mb-3 text-[#0766ff]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-10 w-10"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-            />
-          </svg>
-        </div>
-        <h1 class="text-3xl font-bold text-slate-900 mb-2 tracking-tight">
-          여행 저축 가계부
-        </h1>
-        <p class="text-slate-500 text-sm">꿈의 여행을 위한 첫 걸음</p>
-      </header>
-
-      <div class="space-y-6 mb-10">
-        <div>
-          <label class="block text-sm font-medium text-slate-700 mb-2"
-            >이름</label
-          >
-          <input
-            type="text"
-            v-model="loginData.name"
-            placeholder="이름을 입력하세요"
-            class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-indigo-300 focus:border-[#0766ff] outline-none text-slate-800"
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-slate-700 mb-2"
-            >이메일</label
-          >
-          <input
-            type="email"
-            v-model="loginData.email"
-            placeholder="email@example.com"
-            class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-indigo-300 focus:border-[#0766ff] outline-none text-slate-800"
-          />
-        </div>
+  <div class="landing-page">
+    <div class="card">
+      <div class="title-wrap">
+        <span class="plane">✈</span>
+        <h1>여행 저축 가계부</h1>
       </div>
 
-      <button
-        @click="handleStart"
-        class="w-full py-4 px-6 bg-[#0766ff] hover:bg-[#0053d9] text-white font-bold rounded-2xl transition-all shadow-lg shadow-blue-200"
-      >
-        시작하기
-      </button>
+      <p class="subtitle">꿈의 여행을 위한 첫 걸음</p>
 
-      <footer class="mt-8 text-center text-xs text-slate-300">
-        © 2026 Travelet.
-      </footer>
-    </main>
+      <div class="field">
+        <label>이름</label>
+        <input v-model="name" type="text" placeholder="이름을 입력하세요" />
+      </div>
+
+      <div class="field">
+        <label>이메일</label>
+        <input v-model="email" type="email" placeholder="email@example.com" />
+      </div>
+
+      <button @click="goToOnboarding">시작하기</button>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
-// 만약 Pinia 스토어를 사용하신다면 auth 스토어에서 로그인 액션을 가져옵니다.
-// import { useAuthStore } from '@/stores/auth';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useTravelStore } from '@/stores/travel'
 
-const router = useRouter();
-// const authStore = useAuthStore();
+const router = useRouter()
+const travelStore = useTravelStore()
 
-// 상태 관리 (이름, 이메일 입력값)
-const state = reactive({
-  loginData: {
-    name: '',
-    email: '',
-  },
-  isProcessing: false,
-});
+const name = ref('')
+const email = ref('')
 
-// 구조 분해 할당 (toRefs 사용 필수 지침 반영)
-const { loginData, isProcessing } = toRefs(state);
-
-/**
- * '시작하기' 버튼 클릭 시 처리
- */
-const handleStart = async () => {
-  if (!state.loginData.name || !state.loginData.email) {
-    alert('이름과 이메일을 모두 입력해 주세요.');
-    return;
+const goToOnboarding = () => {
+  if (!name.value || !email.value) {
+    alert('이름과 이메일을 입력해주세요.')
+    return
   }
 
-  state.isProcessing = true;
+  travelStore.setUserName(name.value)
+  travelStore.setUserEmail(email.value)
 
-  try {
-    // 1. 실제 로그인/회원가입 API 호출 (Auth 스토어 활용 추천)
-    // await authStore.login(state.loginData);
-
-    // 테스트용: 로그인 성공 시 토큰을 임시 저장 (개발 단계)
-    // localStorage.setItem('token', 'test_token');
-
-    // 2. 로그인 성공 후 온보딩(여행 설정) 첫 단계로 이동
-    // (api/index.js 인터셉터에서 토큰을 활용할 수 있게 됩니다.)
-    router.push({ name: 'step-region' });
-  } catch (error) {
-    console.error('로그인 실패:', error);
-    alert('로그인 중 에러가 발생했습니다.');
-  } finally {
-    state.isProcessing = false;
-  }
-};
+  router.push('/onboarding')
+}
 </script>
 
 <style scoped>
-/* 앱처럼 보이기 위한 스타일 */
-.app-container {
-  /* PC 브라우저에서 볼 때도 모바일 화면 크기로 고정 */
-  height: 100vh;
+.landing-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0766ff, #0047d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-/* 아래에서 위로 스윽 올라오는 애니메이션 */
-.animate-slide-up {
-  animation: slideUp 0.6s ease-out;
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #f8fbff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-/* 스크롤바 숨기기 (모바일 앱 느낌) */
-::webkit-scrollbar {
-  display: none;
+.plane {
+  font-size: 28px;
+  color: #0766ff;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #1d2a57;
+  font-weight: 800;
+}
+
+.subtitle {
+  color: #7b8497;
+  margin-bottom: 28px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #5b6478;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #d7e3f8;
+  border-radius: 10px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: #0766ff;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
 }
 </style>

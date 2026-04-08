@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="app-container min-h-screen bg-slate-50 flex flex-col mx-auto max-w-md shadow-2xl overflow-hidden relative"
   >
@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import { RouterView } from 'vue-router'
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -78,5 +79,20 @@ const isLoading = computed(() => false);
   height: 100vh;
   border-left: 1px solid #f1f5f9;
   border-right: 1px solid #f1f5f9;
+}
+</style> -->
+<script setup>
+import { RouterView } from 'vue-router';
+</script>
+
+<template>
+  <RouterView />
+</template>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8fbff;
 }
 </style>

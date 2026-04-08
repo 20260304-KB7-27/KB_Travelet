@@ -1,66 +1,33 @@
-import { createRouter, createWebHistory } from 'vue-router';
-
-const routes = [
-  {
-    path: '/',
-    name: 'landing',
-    component: () => import('@/pages/LandingView.vue'),
-    meta: { title: '시작하기' },
-  },
-  {
-    path: '/onboarding',
-    component: () => import('@/pages/OnboardingView.vue'),
-    children: [
-      {
-        path: 'region',
-        name: 'step-region',
-        component: () => import('@/components/onboarding/StepRegion.vue'),
-        meta: { step: 1 },
-      },
-      {
-        path: 'schedule',
-        name: 'step-schedule',
-        component: () => import('@/components/onboarding/StepSchedule.vue'),
-        meta: { step: 2 },
-      },
-      {
-        path: 'option',
-        name: 'step-option',
-        component: () => import('@/components/onboarding/StepOption.vue'),
-        meta: { step: 3 },
-      },
-      {
-        path: 'income',
-        name: 'step-income',
-        component: () => import('@/components/onboarding/StepIncome.vue'),
-        meta: { step: 4 },
-      },
-    ],
-  },
-  {
-    path: '/main',
-    name: 'main-dashboard',
-    component: () => import('@/pages/MainDashboard.vue'),
-    meta: { title: '대시보드' },
-  },
-  {
-    path: '/settings',
-    name: 'settings',
-    component: () => import('@/pages/SettingsView.vue'),
-    meta: { title: '설정' },
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/',
-  },
-];
+import { createRouter, createWebHistory } from 'vue-router'
+import LandingView from '@/pages/LandingView.vue'
+import OnboardingView from '@/pages/OnboardingView.vue'
+import SettingsView from '@/pages/SettingsView.vue'
+import MainDashboard from '@/pages/MainDashboard.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior() {
-    return { top: 0 };
-  },
-});
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'landing',
+      component: LandingView,
+    },
+    {
+      path: '/onboarding',
+      name: 'onboarding',
+      component: OnboardingView,
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: SettingsView,
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: MainDashboard,
+    },
+  ],
+})
 
-export default router;
+export default router

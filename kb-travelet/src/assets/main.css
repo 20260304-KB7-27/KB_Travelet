@@ -25,3 +25,9 @@
 .btn-primary:hover {
   background-color: #0053d9 !important;
 }
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+}
