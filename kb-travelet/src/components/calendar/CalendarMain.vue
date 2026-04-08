@@ -58,7 +58,7 @@
       <div
         v-for="day in days"
         :key="day"
-        class="col fw-bold py-2 text-muted small"
+        class="col fw-bold py-2 small"
         :class="{ 'text-danger': day === '일', 'text-primary': day === '토' }"
       >
         {{ day }}
@@ -71,7 +71,12 @@
         :key="index"
         class="col-1-7"
       >
-        <CalendarDayBar v-if="dayObj.date" :date="dayObj.date" />
+        <CalendarDayBar
+          v-if="dayObj.date"
+          :date="dayObj.date"
+          :year="currentYear"
+          :month="currentMonth"
+        />
         <div v-else class="h-100 p-2 opacity-25"></div>
       </div>
     </div>
