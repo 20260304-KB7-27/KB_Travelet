@@ -17,7 +17,7 @@
 
         <div class="settings-content">
           <ProfileSection class="mb-4" />
-          <div class="travel-section">
+          <div class="travel-section mb-4">
             <TravelGoalSection
               v-if="myTravelGoal?.destination"
               :goal="myTravelGoal"
@@ -30,12 +30,19 @@
               <p class="text-muted small">
                 새로운 여행 계획을 세우고 자산을 관리해보세요!
               </p>
-              <button @click="createNewGoal" class="btn btn-primary px-4">
+              <button
+                @click="createNewGoal"
+                class="btn px-4"
+                style="background-color: var(--color-primary); color: white"
+              >
                 목표 만들기
               </button>
             </div>
           </div>
-          <FinishGoalSection @finish-goal="handleFinishGoal(myTravelGoal.id)" />
+          <FinishGoalSection
+            :has-goal="!!myTravelGoal?.destination"
+            @finish-goal="handleFinishGoal(myTravelGoal.id)"
+          />
         </div>
       </div>
     </main>
@@ -49,8 +56,9 @@ import ProfileSection from '@/components/profile/ProfileSection.vue';
 import TravelGoalSection from '@/components/profile/TravelGoalSection.vue';
 import FinishGoalSection from '@/components/profile/FinishGoalSection.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-// 1. 초기 데이터 설정 (값이 비어있지 않도록 넉넉하게 채워둠)
+// 1. 초기 데이터 설정
 const myTravelGoal = ref({
   id: 1,
   destination: '도쿄 & 오사카',
@@ -61,6 +69,8 @@ const myTravelGoal = ref({
   flightExpense: 450000,
   hotelExpense: 1850000,
 });
+
+const router = useRouter();
 
 // 2. 자식(TravelGoalSection)이 보낸 수정된 데이터를 처리
 const handleGoalUpdate = (newData) => {
@@ -78,6 +88,12 @@ const handleFinishGoal = (id) => {
   // 해당 id에 대한 목표 완료 여부를 수정해주세요. OR 삭제해주세요.
   console.log(`${id}번 목표 완료! 이제 다시 시작`);
   myTravelGoal.value = null;
+};
+
+const createNewGoal = () => {
+  if (confirm('새 여행 목표를 등록하러 가볼까요?')) {
+    router.push('/onboarding');
+  }
 };
 </script>
 

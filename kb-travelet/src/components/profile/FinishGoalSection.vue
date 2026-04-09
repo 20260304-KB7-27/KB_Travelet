@@ -13,6 +13,7 @@
       <button
         class="btn btn-outline-primary flex-grow-1 py-2 fw-bold"
         @click="handleEarlyFinish"
+        :disabled="!hasGoal"
       >
         <i class="fas fa-flag-checkered me-2"></i>조기 종료하기
       </button>
@@ -21,9 +22,10 @@
 </template>
 
 <script setup>
-
-const emit = defineEmits(['finish-goal'])
-
+const props = defineProps({
+  hasGoal: Boolean,
+});
+const emit = defineEmits(['finish-goal']);
 
 const handleEarlyFinish = () => {
   // 브라우저 기본 confirm보다는 나중에 예쁜 커스텀 모달로 바꾸면 더 좋습니다!

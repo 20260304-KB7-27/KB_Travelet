@@ -25,15 +25,20 @@
       <input
         v-model="modelValue.startDate"
         type="date"
+        :min="todayDate"
         class="form-control form-control-sm"
+        @change="validateDates"
       />
     </div>
+
     <div class="col-6">
       <label class="text-muted small mb-1">귀국일</label>
       <input
         v-model="modelValue.endDate"
         type="date"
+        :min="modelValue.startDate || todayDate"
         class="form-control form-control-sm"
+        @change="validateDates"
       />
     </div>
     <div class="col-12 mb-3">
@@ -109,11 +114,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
   modelValue: { type: Object, required: true },
 });
+
+// 1. 오늘 날짜 구하기 (YYYY-MM-DD 형식)
+const todayDate = new Date().toISOString().split('T')[0];
+
+// 2. 로직 검증 함수
+const validateDates = () => {
+  const start = props.modelValue.startDate;
+  const end = props.modelValue.endDate;
+
+  if (!start) return;
+
+  // 귀국일이 출발일보다 빠르면 귀국일을 출발일로 맞춤
+  if (end && start > end) {
+    alert('귀국일은 출발일보다 빠를 수 없습니다!');
+    props.modelValue.endDate = start;
+  }
+};
 
 const showOptions = ref(false);
 

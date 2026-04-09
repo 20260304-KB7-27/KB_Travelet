@@ -1,21 +1,17 @@
 <template>
   <div
-<<<<<<< feature/dashboard
     v-if="calendarDate.date"
     class="date-card d-flex flex-column p-2 rounded-3 border h-100 bg-white"
     :class="{ 'border-primary border-2 shadow-sm': isToday() }"
     @click="viewDailyLedger"
   >
-    <span
-      class="text-center fw-bold small"
-      :style="getDateColor()"
-    >
+    <span class="text-center fw-bold small" :style="getDateColor()">
       {{ calendarDate.date }}
     </span>
     <div class="mt-auto"></div>
   </div>
 
-  <div v-else class="h-100" style="min-height: 75px; opacity: 0;"></div>
+  <div v-else class="h-100" style="min-height: 75px; opacity: 0"></div>
 </template>
 
 <script setup>
@@ -25,7 +21,7 @@ const props = defineProps({
     type: Object,
     required: true,
     // 기대 구조: { year: Number, month: Number, date: Number | null }
-  }
+  },
 });
 
 // 오늘 날짜 확인 (date가 null이면 false 반환)
@@ -49,55 +45,6 @@ const getDateColor = () => {
   if (isToday()) return { color: 'var(--color-primary)' };
 
   // 요일 계산
-  const dayOfWeek = new Date(year, month - 1, date).getDay();
-  if (dayOfWeek === 0) return { color: '#dc3545' }; // 일요일
-  if (dayOfWeek === 6) return { color: '#0d6efd' }; // 토요일
-  return { color: '#212529' }; // 평일
-};
-
-const viewDailyLedger = () => {
-  const { year, month, date } = props.calendarDate;
-  if (date) {
-    console.log(`${year}-${month}-${date} 상세 보기`);
-  }
-=======
-    class="date-card d-flex flex-column p-2 rounded-3 border h-100 bg-white"
-    :class="{ 'border-primary border-2 shadow-sm': isToday(date) }"
-    @click="viewDailyledger"
-  >
-    <span class="text-center fw-bold small" :style="getDateColor(date)">
-      {{ date }}
-    </span>
-    <div class="mt-auto"></div>
-  </div>
-</template>
-
-<script setup>
-const props = defineProps({
-  calendarDate: {
-    type: Object,
-    required: true,
-  },
-});
-
-const isToday = () => {
-  const { year, month, date } = props.calendarDate;
-  if (!date) return false;
-
-  const today = new Date();
-  return (
-    date === today.getDate() &&
-    month === today.getMonth() + 1 &&
-    year === today.getFullYear()
-  );
-};
-
-const getDateColor = () => {
-  const { year, month, date } = props.calendarDate;
-  if (!date) return {};
-
-  if (isToday()) return { color: 'var(--color-primary)' };
-
   const dayOfWeek = new Date(year, month - 1, date).getDay();
   if (dayOfWeek === 0) return { color: '#dc3545' }; // 일요일
   if (dayOfWeek === 6) return { color: '#0d6efd' }; // 토요일
