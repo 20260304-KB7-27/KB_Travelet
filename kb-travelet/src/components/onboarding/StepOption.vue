@@ -1,10 +1,12 @@
 <template>
   <div class="step-option">
-    <p class="back-text" @click="$emit('back')">← 수입 입력으로 돌아가기</p>
+    <div class="top-fixed">
+      <p class="back-text" @click="$emit('back')">← 수입 입력으로 돌아가기</p>
 
-    <div class="title-row">
-      <h2>여행 예산 옵션을 선택하세요</h2>
-      <p class="sub-text">목적지: {{ store.destination }}</p>
+      <div class="title-row">
+        <h2>여행 예산 옵션을 선택하세요</h2>
+        <p class="sub-text">목적지: {{ store.destination }}</p>
+      </div>
     </div>
 
     <div v-if="loading" class="message">데이터 불러오는 중...</div>
@@ -124,6 +126,10 @@ const select = (option) => {
   selected.value = option.key
   store.setBudgetOption(option.label)
   store.setTargetAmount(option.total)
+  store.setTravelCost(option.total)
+  store.setFlightCost(option.flight)
+  store.setHotelCost(option.hotel)
+  store.setDailyBudget(option.daily)
 }
 
 const complete = () => {
@@ -139,6 +145,15 @@ onMounted(fetchData)
 <style scoped>
 .step-option {
   width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.top-fixed {
+  flex-shrink: 0;
 }
 
 .back-text {
@@ -157,6 +172,7 @@ h2 {
   color: #1d2a57;
   margin: 0 0 8px;
   font-weight: 800;
+  line-height: 1.3;
 }
 
 .sub-text {
@@ -168,13 +184,20 @@ h2 {
 .message {
   padding: 20px 0;
   color: #1d2a57;
+  flex: 1;
 }
 
 .option-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
+  padding-right: 6px;
 }
 
 .option-card {
@@ -184,6 +207,7 @@ h2 {
   background-color: #ffffff;
   cursor: pointer;
   transition: all 0.18s ease;
+  flex-shrink: 0;
 }
 
 .option-card:hover {
@@ -200,6 +224,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
@@ -215,6 +240,7 @@ h2 {
   font-size: 18px;
   font-weight: 800;
   color: #0766ff;
+  flex-shrink: 0;
 }
 
 .detail-list {
@@ -231,12 +257,14 @@ h2 {
   font-size: 14px;
   color: #7d8594;
   line-height: 1.4;
+  gap: 12px;
 }
 
 .detail-list strong {
   color: #4d5565;
   font-weight: 700;
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .divider {
@@ -255,6 +283,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .daily-row span {
@@ -267,6 +296,7 @@ h2 {
   font-size: 14px;
   color: #0766ff;
   font-weight: 800;
+  flex-shrink: 0;
 }
 
 .days-text {
@@ -287,10 +317,40 @@ h2 {
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .complete-btn:disabled {
   background-color: #a9c4fb;
   cursor: default;
+}
+
+/* 스크롤바 */
+.option-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.option-list::-webkit-scrollbar-thumb {
+  background: #c9d8f5;
+  border-radius: 999px;
+}
+
+.option-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  .option-card {
+    padding: 18px 16px 14px;
+  }
+
+  .top-line h3,
+  .price {
+    font-size: 16px;
+  }
 }
 </style>

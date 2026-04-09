@@ -14,6 +14,10 @@ export const useTravelStore = defineStore('travel', () => {
   const budgetOption = ref('')
   const targetAmount = ref(0)
   const currentAsset = ref(0)
+  const travelCost = ref(0)
+  const flightCost = ref(0)
+  const hotelCost = ref(0)
+  const dailyBudget = ref(0)
 
   const isCompleted = ref(false)
   const isEarlyClosed = ref(false)
@@ -83,6 +87,22 @@ export const useTravelStore = defineStore('travel', () => {
     currentAsset.value = Number(value) || 0
   }
 
+  const setTravelCost = (value) => {
+    travelCost.value = Number(value) || 0
+  }
+
+  const setFlightCost = (value) => {
+    flightCost.value = Number(value) || 0
+  }
+
+  const setHotelCost = (value) => {
+    hotelCost.value = Number(value) || 0
+  }
+
+  const setDailyBudget = (value) => {
+    dailyBudget.value = Number(value) || 0
+  }
+
   const markEarlyClosed = () => {
     isEarlyClosed.value = true
     isCompleted.value = true
@@ -93,6 +113,10 @@ export const useTravelStore = defineStore('travel', () => {
     budgetOption.value = ''
     targetAmount.value = 0
     currentAsset.value = 0
+    travelCost.value = 0
+    flightCost.value = 0
+    hotelCost.value = 0
+    dailyBudget.value = 0
     isCompleted.value = false
     isEarlyClosed.value = false
   }
@@ -108,6 +132,10 @@ export const useTravelStore = defineStore('travel', () => {
     budgetOption,
     targetAmount,
     currentAsset,
+    travelCost,
+    flightCost,
+    hotelCost,
+    dailyBudget,
     isCompleted,
     isEarlyClosed,
     remainingAmount,
@@ -123,6 +151,10 @@ export const useTravelStore = defineStore('travel', () => {
     setBudgetOption,
     setTargetAmount,
     setCurrentAsset,
+    setTravelCost,
+    setFlightCost,
+    setHotelCost,
+    setDailyBudget,
     markEarlyClosed,
     resetGoal,
   }
