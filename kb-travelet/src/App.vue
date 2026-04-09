@@ -1,7 +1,7 @@
 ﻿<template>
   <div :class="appContainerClasses">
     <main class="flex-1 overflow-y-auto">
-      <RouterView/>
+      <RouterView />
     </main>
 
     <div
