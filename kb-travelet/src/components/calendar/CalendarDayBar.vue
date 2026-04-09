@@ -23,7 +23,6 @@ const props = defineProps({
   calendarDate: {
     type: Object,
     required: true,
-    // 기대 구조: { year: Number, month: Number, date: Number | null }
   }
 });
 
