@@ -1,4 +1,6 @@
-﻿<template>
+<script setup></script>
+
+<template>
   <div :class="appContainerClasses">
     <main :class="mainContainerClasses">
       <RouterView />
