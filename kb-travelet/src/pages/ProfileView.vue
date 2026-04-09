@@ -17,12 +17,25 @@
 
         <div class="settings-content">
           <ProfileSection class="mb-4" />
-          <TravelGoalSection
-            :goal="myTravelGoal"
-            @update-goal="handleGoalUpdate"
-            class="mb-4"
-          />
-          <FinishGoalSection />
+          <div class="travel-section">
+            <TravelGoalSection
+              v-if="myTravelGoal?.destination"
+              :goal="myTravelGoal"
+              @update-goal="handleGoalUpdate"
+            />
+
+            <div v-else class="bg-white rounded-4 shadow-sm p-5 text-center">
+              <div class="mb-3 text-primary" style="font-size: 3rem">🛫</div>
+              <h5 class="fw-bold">등록된 여행 목표가 없어요</h5>
+              <p class="text-muted small">
+                새로운 여행 계획을 세우고 자산을 관리해보세요!
+              </p>
+              <button @click="createNewGoal" class="btn btn-primary px-4">
+                목표 만들기
+              </button>
+            </div>
+          </div>
+          <FinishGoalSection @finish-goal="handleFinishGoal(myTravelGoal.id)" />
         </div>
       </div>
     </main>
@@ -37,9 +50,9 @@ import TravelGoalSection from '@/components/profile/TravelGoalSection.vue';
 import FinishGoalSection from '@/components/profile/FinishGoalSection.vue';
 import { ref } from 'vue';
 
-
 // 1. 초기 데이터 설정 (값이 비어있지 않도록 넉넉하게 채워둠)
 const myTravelGoal = ref({
+  id: 1,
   destination: '도쿄 & 오사카',
   continent: '아시아',
   startDate: '2026-06-15',
@@ -59,6 +72,12 @@ const handleGoalUpdate = (newData) => {
   myTravelGoal.value = { ...newData };
 
   alert('여행 목표가 성공적으로 수정되었습니다!');
+};
+
+const handleFinishGoal = (id) => {
+  // 해당 id에 대한 목표 완료 여부를 수정해주세요. OR 삭제해주세요.
+  console.log(`${id}번 목표 완료! 이제 다시 시작`);
+  myTravelGoal.value = null;
 };
 </script>
 

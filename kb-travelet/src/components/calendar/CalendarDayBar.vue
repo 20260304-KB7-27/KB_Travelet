@@ -5,28 +5,23 @@
     :class="{ 'border-primary border-2 shadow-sm': isToday() }"
     @click="viewDailyLedger"
   >
-    <span
-      class="text-center fw-bold small"
-      :style="getDateColor()"
-    >
+    <span class="text-center fw-bold small" :style="getDateColor()">
       {{ calendarDate.date }}
     </span>
     <div class="mt-auto"></div>
   </div>
 
-  <div v-else class="h-100" style="min-height: 75px; opacity: 0;"></div>
+  <div v-else class="h-100" style="min-height: 75px; opacity: 0"></div>
 </template>
 
 <script setup>
-// Props 정의: calendarDate 객체 하나로 깔끔하게!
 const props = defineProps({
   calendarDate: {
     type: Object,
     required: true,
-  }
+  },
 });
 
-// 오늘 날짜 확인 (date가 null이면 false 반환)
 const isToday = () => {
   const { year, month, date } = props.calendarDate;
   if (!date) return false;
@@ -39,14 +34,12 @@ const isToday = () => {
   );
 };
 
-// 날짜 색상 결정
 const getDateColor = () => {
   const { year, month, date } = props.calendarDate;
   if (!date) return {};
 
   if (isToday()) return { color: 'var(--color-primary)' };
 
-  // 요일 계산
   const dayOfWeek = new Date(year, month - 1, date).getDay();
   if (dayOfWeek === 0) return { color: '#dc3545' }; // 일요일
   if (dayOfWeek === 6) return { color: '#0d6efd' }; // 토요일
@@ -67,17 +60,18 @@ const viewDailyLedger = () => {
   transition: all 0.2s ease;
   cursor: pointer;
 }
+
 .date-card:hover {
-  transform: translateY(-3px); /* 위로 살짝 들림 */
-  border-color: var(--color-primary-soft); /* 테두리 색 변경 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important; /* 은은한 그림자 */
+  transform: translateY(-3px);
+  border-color: var(--color-primary-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
   z-index: 1;
 }
 
 .date-card:active {
-  transform: translateY(-1px) scale(0.97); /* 꾹 눌리는 효과 */
+  transform: translateY(-1px) scale(0.97);
   background-color: #f8f9fa;
-  transition: all 0.05s; /* 클릭은 즉각적으로! */
+  transition: all 0.05s;
 }
 
 .border-primary.border-2 {

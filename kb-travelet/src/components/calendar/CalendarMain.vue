@@ -78,7 +78,11 @@
         :key="index"
         class="col-1-7"
       >
-        <CalendarDayBar v-if="dayObj.date" :calendar-date="dayObj" />
+        <CalendarDayBar
+          v-if="dayObj.date"
+          :calendar-date="dayObj"
+          :key="dayObj.date"
+        />
         <div v-else class="h-100 p-2 opacity-25"></div>
       </div>
     </div>
