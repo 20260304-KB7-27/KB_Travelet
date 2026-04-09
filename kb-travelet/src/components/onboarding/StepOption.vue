@@ -11,21 +11,16 @@
             class="progress-bar-inner progress-animate"
             style="--progress-start: 75%; --progress-end: 100%; width: 100%"
           ></div>
-          <span
-            class="progress-plane progress-plane-animate"
-            style="--progress-start: 75%; --progress-end: 100%"
-          >
-            <i class="fas fa-plane" aria-hidden="true"></i>
-          </span>
         </div>
       </div>
 
       <div class="content-section p-4 p-md-5">
         <div class="option-copy mb-4">
-          <span class="copy-kicker">Budget</span>
+          <span class="copy-kicker">Trip Option</span>
           <h2 class="section-title mb-2">여행 예산을 정해주세요</h2>
           <p class="section-description mb-0">
-            선택한 여행지, 일정, 그리고 현재 재정 상황에 맞춰 예산 유형을 선택해 주세요.
+            선택한 여행지, 일정, 그리고 현재 재정 상황에 맞춰 예산 유형을 선택해
+            주세요.
           </p>
         </div>
 
@@ -43,10 +38,6 @@
           <div class="summary-chip-card">
             <span class="summary-chip-label">도착일</span>
             <strong class="summary-chip-value">{{ formattedReturn }}</strong>
-          </div>
-          <div class="summary-chip-card">
-            <span class="summary-chip-label">가용 예산</span>
-            <strong class="summary-chip-value">{{ formattedAvailableBudget }}</strong>
           </div>
         </div>
 
@@ -79,25 +70,94 @@
         </p>
 
         <div class="action-row mt-4">
-          <button class="btn secondary-btn" @click="emit('prev')">이전</button>
+          <button class="btn secondary-btn prev-icon-btn" @click="emit('prev')">
+            <i class="fas fa-angle-left" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </div>
+
+    <Transition name="budget-modal">
+      <div
+        v-if="pendingOption"
+        class="budget-modal-backdrop"
+        @click="closeOptionModal"
+      >
+        <div
+          class="budget-modal-card"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="budget-modal-title"
+          @click.stop
+        >
+          <div class="budget-modal-header">
+            <span class="budget-modal-kicker">Selected Plan</span>
+            <h3 id="budget-modal-title" class="budget-modal-title mb-0">
+              이 여행으로 진행할까요?
+            </h3>
+          </div>
+
+          <div class="budget-modal-summary">
+            <div class="budget-modal-item">
+              <span class="budget-modal-label">여행지</span>
+              <strong class="budget-modal-value">{{ selectedDestinationText }}</strong>
+            </div>
+            <div class="budget-modal-item">
+              <span class="budget-modal-label">여행 기간</span>
+              <strong class="budget-modal-value">{{ tripDays }}일간</strong>
+            </div>
+            <div class="budget-modal-item">
+              <span class="budget-modal-label">여행 유형</span>
+              <strong class="budget-modal-value">{{ pendingOption.label }}</strong>
+            </div>
+          </div>
+
+          <div class="budget-daily-banner">
+            <span class="budget-daily-caption">Before Departure</span>
+            <strong class="budget-daily-value">{{ dailyBudgetGuide }}</strong>
+            <p class="budget-daily-description mb-0">
+              여행 전까지 준비 기간을 기준으로 계산한 하루 예산 안내예요.
+            </p>
+          </div>
+
+          <div class="budget-modal-actions">
+            <button
+              type="button"
+              class="btn secondary-btn modal-cancel-btn"
+              @click="closeOptionModal"
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              class="btn confirm-btn modal-confirm-btn"
+              @click="confirmOptionSelection"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useTravelStore } from '@/stores/travel';
 
 const emit = defineEmits(['prev', 'next']);
 const travelStore = useTravelStore();
+const pendingOption = ref(null);
 
 const dayMs = 1000 * 60 * 60 * 24;
+const today = startOfDay(new Date());
 
 const departure = computed(() => parseIsoDate(travelStore.departureDate));
 const arrival = computed(() => parseIsoDate(travelStore.returnDate));
-const availableBudget = computed(() => Number(travelStore.availableBudget || 0));
+const availableBudget = computed(() =>
+  Number(travelStore.availableBudget || 0),
+);
 
 const tripDays = computed(() => {
   if (!departure.value || !arrival.value) {
@@ -105,7 +165,7 @@ const tripDays = computed(() => {
   }
 
   const diff = Math.round((arrival.value - departure.value) / dayMs);
-  return Math.max(diff + 1, 1);
+  return Math.max(diff, 1);
 });
 
 const stayNights = computed(() => {
@@ -138,8 +198,27 @@ const formattedReturn = computed(() =>
 const canSelectBudget = computed(() =>
   Boolean(travelStore.selectedCountry && tripDays.value > 0),
 );
+const daysUntilDeparture = computed(() => {
+  if (!departure.value) {
+    return 0;
+  }
 
-const formattedAvailableBudget = computed(() => formatWon(availableBudget.value));
+  return Math.max(Math.ceil((departure.value - today) / dayMs), 0);
+});
+const dailyBudgetGuide = computed(() => {
+  if (!pendingOption.value) {
+    return '';
+  }
+
+  if (daysUntilDeparture.value <= 0) {
+    return `총 ${pendingOption.value.totalText} 예산을 바로 확인해 주세요.`;
+  }
+
+  const dailyAmount = Math.ceil(
+    pendingOption.value.total / daysUntilDeparture.value,
+  );
+  return `여행 전까지 하루 약 ${formatWon(dailyAmount)} 준비하면 돼요.`;
+});
 
 const budgetOptions = computed(() => {
   const levels = travelStore.selectedCountry?.levels ?? {};
@@ -157,6 +236,7 @@ const budgetOptions = computed(() => {
 
     return {
       ...option,
+      total,
       totalText: canSelectBudget.value ? formatWon(total) : '예상 금액 계산 전',
       dailyText: formatWon(daily * 10000),
       hotelText: formatWon(hotel * 10000),
@@ -170,21 +250,34 @@ const budgetOptions = computed(() => {
   });
 });
 
-function selectOption(option) {
+async function selectOption(option) {
   if (!canSelectBudget.value) {
     return;
   }
 
-  const confirmed = window.confirm(
-    `${option.label}을 선택하셨습니다. 이대로 진행할까요?`,
-  );
+  pendingOption.value = option;
+}
 
-  if (!confirmed) {
+function closeOptionModal() {
+  pendingOption.value = null;
+}
+
+async function confirmOptionSelection() {
+  if (!pendingOption.value) {
     return;
   }
 
-  travelStore.setBudgetOption(option.key);
-  emit('next');
+  try {
+    travelStore.setBudgetOption(pendingOption.value.key);
+    await travelStore.saveProfile({
+      isCompleted: true,
+    });
+    closeOptionModal();
+    emit('next');
+  } catch (error) {
+    console.error('프로필 완료 처리 실패:', error);
+    alert('프로필을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+  }
 }
 
 function parseIsoDate(value) {
@@ -194,6 +287,10 @@ function parseIsoDate(value) {
 
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function startOfDay(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 function formatDisplayDate(date) {
@@ -211,15 +308,24 @@ function formatWon(amount) {
     maximumFractionDigits: 0,
   }).format(amount);
 }
+
+onMounted(async () => {
+  try {
+    await travelStore.loadProfile();
+  } catch (error) {
+    console.error('옵션 페이지 프로필 불러오기 실패:', error);
+  }
+});
 </script>
 
 <style scoped>
 .onboarding-page-bg {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: #0766ff;
-  padding: 24px 20px 40px;
+  padding: 24px 20px;
+  box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
 
@@ -259,6 +365,7 @@ function formatWon(amount) {
   background: rgba(2, 8, 23, 0.08);
   border-radius: 999px;
   overflow: visible;
+  margin-top: 6px;
 }
 
 .progress-bar-inner {
@@ -279,12 +386,25 @@ function formatWon(amount) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #051766;
-  font-size: 1.15rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  color: #0766ff;
+  font-size: 1.4rem;
   line-height: 1;
-  transform: translate(-50%, -60%);
+  background: linear-gradient(180deg, #ffffff 0%, #eaf2ff 100%);
+  border: 2px solid rgba(7, 102, 255, 0.18);
+  border-radius: 999px;
+  box-shadow:
+    0 10px 20px rgba(7, 102, 255, 0.2),
+    0 2px 6px rgba(5, 23, 102, 0.14);
+  transform: translate(-50%, -50%);
   transform-origin: center;
   pointer-events: none;
+  z-index: 2;
+}
+
+.progress-plane i {
+  filter: drop-shadow(0 1px 2px rgba(5, 23, 102, 0.16));
 }
 
 .progress-plane-animate {
@@ -440,16 +560,196 @@ function formatWon(amount) {
 }
 
 .action-row > .btn {
-  min-width: 140px;
   min-height: 52px;
   border-radius: 999px;
   font-weight: 700;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.prev-icon-btn {
+  width: 52px;
+  min-width: 52px;
+  padding: 0;
+  font-size: 1.2rem;
 }
 
 .secondary-btn {
   border: 1px solid var(--color-primary-soft);
-  background: #fff;
+  background: #f8fafc;
   color: var(--color-primary-deep);
+}
+
+.secondary-btn:hover {
+  transform: translateY(-2px);
+  background: #eef2f7;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.confirm-btn {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(7, 102, 255, 0.16);
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  background: #055ae3;
+  box-shadow: 0 16px 30px rgba(7, 102, 255, 0.24);
+}
+
+.budget-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(5, 23, 102, 0.34);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 30;
+  will-change: opacity;
+  contain: paint;
+}
+
+.budget-modal-enter-active,
+.budget-modal-leave-active {
+  transition: opacity 0.22s linear;
+}
+
+.budget-modal-enter-active .budget-modal-card,
+.budget-modal-leave-active .budget-modal-card {
+  transition:
+    transform 0.34s cubic-bezier(0.22, 0.8, 0.2, 1),
+    opacity 0.22s linear;
+  will-change: transform, opacity;
+}
+
+.budget-modal-enter-from,
+.budget-modal-leave-to {
+  opacity: 0;
+}
+
+.budget-modal-enter-from .budget-modal-card,
+.budget-modal-leave-to .budget-modal-card {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+
+.budget-modal-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout paint style;
+}
+
+.budget-modal-card {
+  width: min(100%, 480px);
+  padding: 24px;
+  border-radius: 2rem;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(5, 23, 102, 0.18);
+}
+
+.budget-modal-header {
+  margin-bottom: 18px;
+}
+
+.budget-modal-kicker {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.budget-modal-title {
+  color: var(--color-primary-deep);
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.budget-modal-summary {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.budget-modal-item {
+  padding: 14px 16px;
+  border: 1px solid var(--color-primary-soft);
+  border-radius: 1.2rem;
+  background: #f8fbff;
+}
+
+.budget-modal-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.budget-modal-value {
+  color: var(--color-primary-deep);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.budget-daily-banner {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 1.25rem;
+  background: rgba(5, 23, 102, 0.06);
+}
+
+.budget-daily-caption {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.budget-daily-value {
+  display: block;
+  color: var(--color-primary-deep);
+  font-size: 1.22rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.budget-daily-description {
+  margin-top: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.budget-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-cancel-btn,
+.modal-confirm-btn {
+  flex: 1;
+  min-height: 50px;
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 @media (max-width: 991px) {

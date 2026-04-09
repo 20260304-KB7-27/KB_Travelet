@@ -2,6 +2,7 @@
   <div class="onboarding-transition-shell">
     <Transition :name="transitionName">
       <component
+        v-if="isReady"
         :is="currentStepComponent"
         :key="currentStepKey"
         @next="nextStep"
@@ -12,16 +13,19 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import StepRegion from '@/components/onboarding/StepRegion.vue';
 import StepSchedule from '@/components/onboarding/StepSchedule.vue';
 import StepOption from '@/components/onboarding/StepOption.vue';
 import StepIncome from '@/components/onboarding/StepIncome.vue';
+import { useTravelStore } from '@/stores/travel';
 
 const router = useRouter();
 const route = useRoute();
+const travelStore = useTravelStore();
 const transitionName = ref('step-forward');
+const isReady = ref(false);
 
 const steps = [
   { key: 'region', routeName: 'step-region', component: StepRegion },
@@ -68,13 +72,23 @@ const prevStep = () => {
     router.push({ name: steps[currentStep.value - 1].routeName });
   }
 };
+
+onMounted(async () => {
+  try {
+    await travelStore.loadProfile();
+  } catch (error) {
+    console.error('프로필 불러오기 실패:', error);
+  } finally {
+    isReady.value = true;
+  }
+});
 </script>
 
 <style scoped>
 .onboarding-transition-shell {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
 }
 

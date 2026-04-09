@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import api from '@/api';
+import { useAuthStore } from '@/stores/auth';
 
 export const useTravelStore = defineStore('travel', () => {
   const continents = ref({});
@@ -17,6 +18,120 @@ export const useTravelStore = defineStore('travel', () => {
 
   const hasSchedule = computed(() => Boolean(departureDate.value && returnDate.value));
   const availableBudget = computed(() => assetAmount.value + monthlyIncome.value);
+
+  function getCurrentMemberId() {
+    const authStore = useAuthStore();
+    return authStore.user?.id || localStorage.getItem('userId') || '';
+  }
+
+  function createDefaultProfile(memberId) {
+    return {
+      memberId,
+      destination: '',
+      startDate: '',
+      endDate: '',
+      currentAsset: 0,
+      monthlyIncome: 0,
+      isCompleted: false,
+    };
+  }
+
+  function findCountryByCode(code) {
+    if (!code) {
+      return { continent: '', country: null };
+    }
+
+    const continentNameMap = {
+      Asia: '아시아',
+      Europe: '유럽',
+      Americas: '아메리카',
+      Africa: '아프리카',
+      Oceania: '오세아니아',
+    };
+
+    for (const [sourceName, countries] of Object.entries(continents.value ?? {})) {
+      const matchedCountry = (countries ?? []).find((country) => country.code === code);
+
+      if (matchedCountry) {
+        return {
+          continent: continentNameMap[sourceName] ?? sourceName,
+          country: matchedCountry,
+        };
+      }
+    }
+
+    return { continent: '', country: null };
+  }
+
+  function applyProfile(profile) {
+    const memberId = getCurrentMemberId();
+    const nextProfile = {
+      ...createDefaultProfile(memberId),
+      ...(profile ?? {}),
+    };
+    const { continent, country } = findCountryByCode(nextProfile.destination);
+
+    selectedContinent.value = continent;
+    selectedCountry.value = country;
+    departureDate.value = nextProfile.startDate || '';
+    returnDate.value = nextProfile.endDate || '';
+    assetAmount.value = Number(nextProfile.currentAsset) || 0;
+    monthlyIncome.value = Number(nextProfile.monthlyIncome) || 0;
+  }
+
+  async function getCurrentProfile() {
+    const memberId = getCurrentMemberId();
+
+    if (!memberId) {
+      throw new Error('사용자 정보를 찾을 수 없습니다.');
+    }
+
+    const profiles = await api.get('/profiles', {
+      params: { memberId },
+    });
+
+    return Array.isArray(profiles) ? (profiles[0] ?? null) : null;
+  }
+
+  async function loadProfile() {
+    const memberId = getCurrentMemberId();
+
+    if (!memberId) {
+      resetTravelPlan();
+      return null;
+    }
+
+    await fetchContinents();
+
+    const profile = await getCurrentProfile();
+    applyProfile(profile ?? createDefaultProfile(memberId));
+    return profile;
+  }
+
+  async function saveProfile(patch = {}) {
+    const memberId = getCurrentMemberId();
+
+    if (!memberId) {
+      throw new Error('저장할 사용자 정보를 찾을 수 없습니다.');
+    }
+
+    const currentProfile = await getCurrentProfile();
+    const baseProfile = currentProfile ?? createDefaultProfile(memberId);
+
+    const nextProfile = {
+      ...createDefaultProfile(memberId),
+      ...baseProfile,
+      ...patch,
+      memberId,
+    };
+
+    const savedProfile = currentProfile?.id
+      ? await api.patch(`/profiles/${currentProfile.id}`, nextProfile)
+      : await api.post('/profiles', nextProfile);
+
+    applyProfile(savedProfile);
+    return savedProfile;
+  }
 
   async function fetchContinents() {
     if (Object.keys(continents.value).length > 0) {
@@ -45,9 +160,28 @@ export const useTravelStore = defineStore('travel', () => {
     selectedCountry.value = country;
   }
 
+  async function saveDestination({ continent, country }) {
+    setDestination({ continent, country });
+
+    return saveProfile({
+      destination: country?.code || '',
+      isCompleted: false,
+    });
+  }
+
   function setSchedule({ startDate, endDate }) {
     departureDate.value = startDate;
     returnDate.value = endDate;
+  }
+
+  async function saveSchedule({ startDate, endDate }) {
+    setSchedule({ startDate, endDate });
+
+    return saveProfile({
+      startDate,
+      endDate,
+      isCompleted: false,
+    });
   }
 
   function setBudgetOption(option) {
@@ -57,6 +191,22 @@ export const useTravelStore = defineStore('travel', () => {
   function setIncomeInfo({ assets = 0, income = 0 }) {
     assetAmount.value = Number(assets) || 0;
     monthlyIncome.value = Number(income) || 0;
+  }
+
+  async function saveIncomeInfo({ assets = 0, income = 0 }) {
+    const normalizedAssets = Number(assets) || 0;
+    const normalizedIncome = Number(income) || 0;
+
+    setIncomeInfo({
+      assets: normalizedAssets,
+      income: normalizedIncome,
+    });
+
+    return saveProfile({
+      currentAsset: normalizedAssets,
+      monthlyIncome: normalizedIncome,
+      isCompleted: false,
+    });
   }
 
   function setMonthlyIncome(income) {
@@ -87,10 +237,16 @@ export const useTravelStore = defineStore('travel', () => {
     hasSchedule,
     availableBudget,
     fetchContinents,
+    loadProfile,
+    getCurrentProfile,
+    saveProfile,
     setDestination,
+    saveDestination,
     setSchedule,
+    saveSchedule,
     setBudgetOption,
     setIncomeInfo,
+    saveIncomeInfo,
     setMonthlyIncome,
     resetTravelPlan,
   };
