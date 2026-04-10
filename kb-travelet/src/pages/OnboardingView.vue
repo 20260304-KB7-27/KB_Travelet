@@ -19,6 +19,7 @@ import StepRegion from '@/components/onboarding/StepRegion.vue';
 import StepSchedule from '@/components/onboarding/StepSchedule.vue';
 import StepOption from '@/components/onboarding/StepOption.vue';
 import StepIncome from '@/components/onboarding/StepIncome.vue';
+import StepFixedExpense from '@/components/onboarding/StepFixedExpense.vue';
 import { useTravelStore } from '@/stores/travel';
 
 const router = useRouter();
@@ -32,6 +33,7 @@ const steps = [
   { key: 'region', routeName: 'step-region', component: StepRegion },
   { key: 'schedule', routeName: 'step-schedule', component: StepSchedule },
   { key: 'income', routeName: 'step-income', component: StepIncome },
+  { key: 'fixed-expense', routeName: 'step-fixed-expense', component: StepFixedExpense },
   { key: 'option', routeName: 'step-option', component: StepOption },
 ];
 
