@@ -1,20 +1,5 @@
 {
-  "members": [
-    {
-      "name": "zxcvzxcv",
-      "email": "zxcvzxcv@naver.com",
-      "password": "zxcvzxcv",
-      "createdAt": "2026년 4월 10일",
-      "id": 1
-    },
-    {
-      "name": "zxcvzxcvzxcv",
-      "email": "zxcvzxcvzxcv@naver.com",
-      "password": "zxcvzxcvzxcv",
-      "createdAt": "2026년 4월 10일",
-      "id": 2
-    }
-  ],
+  "members": [],
   "continents": {
     "Asia": [
       {
@@ -548,7 +533,6 @@
           ]
         }
       }
-    ],
     "Oceania": [
       {
         "name": "호주",
@@ -594,50 +578,7 @@
       }
     ]
   },
-  "transactions": {
-    "date": "2026-04-09",
-    "type": "income",
-    "category": "",
-    "amount": 123123111,
-    "memo": "1111",
-    "id": 1775803482770,
-    "userId": "3"
-  },
-  "profiles": [
-    {
-      "memberId": 1,
-      "destination": "체코",
-      "destinationCode": "CZ",
-      "startDate": "2026-12-23",
-      "endDate": "2027-01-01",
-      "currentAsset": 5000000,
-      "monthlyIncome": 4500000,
-      "budgetOption": "budget",
-      "dailyTravelExpense": 70000,
-      "dailyAvailableBudget": 161000,
-      "hotelExpense": 70000,
-      "flightExpense": 950000,
-      "checkedIn": true,
-      "isCompleted": false,
-      "id": 1
-    },
-    {
-      "memberId": 2,
-      "destination": "싱가포르",
-      "destinationCode": "SG",
-      "startDate": "2026-04-16",
-      "endDate": "2026-04-30",
-      "currentAsset": 10000000,
-      "monthlyIncome": 1300000,
-      "budgetOption": "",
-      "dailyTravelExpense": 0,
-      "dailyAvailableBudget": 0,
-      "hotelExpense": 0,
-      "flightExpense": 0,
-      "checkedIn": false,
-      "isCompleted": false,
-      "id": 2
-    }
-  ],
+  "transactions": [],
+  "profiles": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
