@@ -325,20 +325,17 @@
       "budgetOption": "",
       "checkedIn": false,
       "isCompleted": false,
-      "id": "tmn7iPv"
+      "id": "m7ZiRjwkZCo"
     },
     {
-      "memberId": "FcJoUEH",
-      "destination": "TW",
-      "startDate": "2026-09-04",
-      "endDate": "2026-09-11",
-      "currentAsset": 190000000,
-      "monthlyIncome": 3000000,
-      "budgetOption": "",
-      "checkedIn": false,
+      "memberId": "k8Bc_jur91s",
+      "destination": "JP",
+      "startDate": "2026-04-25",
+      "endDate": "2026-04-27",
+      "currentAsset": 200000,
+      "monthlyIncome": 50000,
       "isCompleted": false,
-      "id": "x3wXCym",
-      "destinationCode": ""
+      "id": "fid0CJJVGt8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

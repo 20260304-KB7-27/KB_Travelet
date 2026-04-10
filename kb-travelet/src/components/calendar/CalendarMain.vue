@@ -6,52 +6,26 @@
     >
       <div class="d-flex justify-content-start">
         <div class="btn-group shadow-sm">
-          <button class="btn btn-sm btn-outline-primary px-2 border-2 me-1">
+          <button
+            @click="prevMonth"
+            class="btn btn-sm btn-outline-primary px-2 border-2 me-1"
+          >
             <i class="fas fa-chevron-left fa-xs"></i>
           </button>
-          <button class="btn btn-sm btn-outline-primary px-2 border-2">
+          <button
+            @click="nextMonth"
+            class="btn btn-sm btn-outline-primary px-2 border-2"
+          >
             <i class="fas fa-chevron-right fa-xs"></i>
           </button>
         </div>
       </div>
 
       <div class="text-center px-4">
-        <h5 class="fw-bold mb-0">2026년 4월</h5>
+        <h5 class="fw-bold mb-0">{{ currentYear }}년 {{ currentMonth }}월</h5>
       </div>
-      <div class="d-flex gap-2 justify-content-end">
-        <div
-          class="p-2 px-3 bg-white rounded-3 text-end border-top border-primary border-4 shadow-sm"
-          style="min-width: 120px"
-        >
-          <div class="text-muted extra-small fw-bold">수익</div>
-          <div class="fw-bold text-primary" style="font-size: 0.9rem">
-            + 2,678,123원
-          </div>
-        </div>
 
-        <div
-          class="p-2 px-3 bg-white rounded-3 text-end border-top border-danger border-4 shadow-sm"
-          style="min-width: 120px"
-        >
-          <div class="text-muted extra-small fw-bold">지출</div>
-          <div class="fw-bold text-danger" style="font-size: 0.9rem">
-            - 1,678,000원
-          </div>
-        </div>
-
-        <div
-          class="p-2 px-3 rounded-3 text-end shadow-sm d-flex flex-column justify-content-center"
-          style="background-color: var(--color-primary); min-width: 140px"
-        >
-          <div class="text-white extra-small fw-bold">총 잔액</div>
-          <div
-            class="fw-bold"
-            style="color: var(--color-surface); font-size: 1rem"
-          >
-            + 1,000,123원
-          </div>
-        </div>
-      </div>
+      <div class="d-flex gap-2 justify-content-end"></div>
     </div>
 
     <div class="row g-0 text-center mb-2">
@@ -81,6 +55,7 @@
       </div>
     </div>
   </div>
+
   <TransactionModal
     v-if="selectedDate"
     :date="selectedDate"
@@ -101,29 +76,19 @@ const currentMonth = ref(today.getMonth() + 1);
 const calendarDates = computed(() => {
   const year = currentYear.value;
   const month = currentMonth.value;
-
-  // 1. 해당 월의 1일이 무슨 요일인지 (0: 일요일, ..., 6: 토요일)
   const firstDay = new Date(year, month - 1, 1).getDay();
-
-  // 2. 해당 월의 마지막 날짜 (0을 넣으면 지난달의 마지막 날을 가져옴)
   const lastDate = new Date(year, month, 0).getDate();
 
   const result = [];
-
-  // 3. 1일 앞의 빈 칸 채우기 (지난달 날짜들)
   for (let i = 0; i < firstDay; i++) {
     result.push({ date: null, currentMonth: false });
   }
-
-  // 4. 실제 날짜 채우기
   for (let d = 1; d <= lastDate; d++) {
     result.push({ date: d, currentMonth: true });
   }
-
   return result;
 });
 
-// 이전 달로 이동
 const prevMonth = () => {
   if (currentMonth.value === 1) {
     currentYear.value--;
@@ -133,7 +98,6 @@ const prevMonth = () => {
   }
 };
 
-// 다음 달로 이동
 const nextMonth = () => {
   if (currentMonth.value === 12) {
     currentYear.value++;
@@ -144,17 +108,22 @@ const nextMonth = () => {
 };
 
 /* ---------------------------------------------------------
-캘린더와 모달 연결
-*/
+🚩 수정된 부분: 캘린더와 모달 연결
+--------------------------------------------------------- */
 const selectedDate = ref(null);
 
-const handleClickDate = (date) => {
-  selectedDate.value = date;
+const handleClickDate = (dayNum) => {
+  // 숫자(dayNum)를 받아서 실제 Date 객체로 변환하여 저장
+  // 월(Month)은 0부터 시작하므로 -1을 해줍니다.
+  selectedDate.value = new Date(
+    currentYear.value,
+    currentMonth.value - 1,
+    dayNum,
+  );
 };
 </script>
 
 <style scoped>
-/* 7열 그리드를 위한 커스텀 스타일 */
 .col-1-7 {
   flex: 0 0 14.285%;
   max-width: 14.285%;
