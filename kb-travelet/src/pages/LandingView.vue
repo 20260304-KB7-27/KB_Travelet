@@ -185,10 +185,20 @@ async function handleLogin() {
     // 🚩 토큰 저장 (라우터 가드용)
     localStorage.setItem('token', res.token || 'temp-token');
 
-    const profile = await travelStore.loadProfile();
+    // 🚩 [수정] 404 에러 방지를 위한 프로필 로드 예외 처리
+    let profile = null;
+    try {
+      profile = await travelStore.loadProfile();
+    } catch (err) {
+      // 404 에러는 데이터가 없는 신규 유저임을 의미하므로 무시하고 진행
+      if (err.response?.status !== 404) {
+        throw err; // 404가 아닌 다른 에러는 catch 블록으로 던짐
+      }
+    }
+
     if (profile?.checkedIn) {
       localStorage.setItem('onboarded', 'true');
-      setTimeout(() => router.push('/main'), 500);
+      setTimeout(() => router.push({ name: 'main-dashboard' }), 500);
     } else {
       localStorage.setItem('onboarded', 'false');
       setTimeout(() => router.push({ name: 'step-region' }), 500);
@@ -211,10 +221,12 @@ async function handleRegister() {
       return;
     }
 
-    showMsg('가입이 완료되었습니다. 로그인을 진행해주세요.', 'success');
-    // 가입 성공 시 자동으로 로그인 모드로 전환
+    showMsg('가입 완료! 잠시 후 온보딩을 시작합니다.', 'success');
+
+    // 🚩 가입 즉시 온보딩으로 이동 (사용자 편의성 증대)
+    localStorage.setItem('onboarded', 'false');
     setTimeout(() => {
-      toggleMode();
+      router.push({ name: 'step-region' });
     }, 1500);
   } catch (error) {
     showMsg('가입 처리 중 오류가 발생했습니다.', 'danger');

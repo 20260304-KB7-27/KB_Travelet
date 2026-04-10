@@ -1,5 +1,48 @@
 {
-  "members": [],
+  "members": [
+    {
+      "name": "qwe",
+      "email": "qwe@naver.com",
+      "password": "qwe",
+      "createdAt": "2026. 4. 9. 오후 11:53:08",
+      "id": "9djjSdlwdoo"
+    },
+    {
+      "name": "나비",
+      "email": "asd@naver.com",
+      "password": "asd",
+      "createdAt": "2026. 4. 10. 오전 10:02:20",
+      "id": "zmOOxBf"
+    },
+    {
+      "name": "트레블러 ",
+      "email": "tra@naver.com",
+      "password": "tra",
+      "createdAt": "2026. 4. 10. 오후 1:27:08",
+      "id": "1IEbFjH"
+    },
+    {
+      "name": "트",
+      "email": "t@naver.com",
+      "password": "t",
+      "createdAt": "2026. 4. 10. 오후 1:44:35",
+      "id": "gNf1ZdD"
+    },
+    {
+      "name": "r",
+      "email": "r@naver.com",
+      "password": "r",
+      "createdAt": "2026. 4. 10. 오후 2:02:17",
+      "id": "xUugayS"
+    },
+    {
+      "name": "asdf",
+      "email": "asdf@asdf.com",
+      "password": "asdf",
+      "createdAt": "2026. 4. 10. 오후 3:49:19",
+      "id": "i7JfaxcsNb0"
+    }
+  ],
   "continents": {
     "Asia": [
       {
@@ -231,6 +274,26 @@
           "eco": [7, 6, 145],
           "std": [25, 35, 220],
           "lux": [80, 120, 670]
+        }
+      }
+    ],
+    "Oceania": [
+      {
+        "name": "호주",
+        "code": "AU",
+        "levels": {
+          "eco": [9, 10, 82],
+          "std": [22, 28, 150],
+          "lux": [55, 70, 470]
+        }
+      },
+      {
+        "name": "뉴질랜드",
+        "code": "NZ",
+        "levels": {
+          "eco": [10, 12, 105],
+          "std": [24, 30, 185],
+          "lux": [60, 80, 520]
         }
       }
     ]

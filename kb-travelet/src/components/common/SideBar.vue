@@ -84,7 +84,7 @@
 
     <div class="mt-auto border-top border-white-50 pt-3">
       <button
-        @click="logout"
+        @click="handleLogout"
         class="btn btn-link text-white-50 p-0 text-decoration-none small"
       >
         <i class="fas fa-sign-out-alt me-1"></i> 로그아웃
@@ -94,18 +94,24 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
-import { useProfileStore } from '@/stores/profile.js';
-import { onMounted, ref } from 'vue';
-import { storeToRefs } from 'pinia';
 
-const profileStore = useProfileStore();
-const { myTravelGoal } = storeToRefs(profileStore);
+const router = useRouter();
+const authStore = useAuthStore();
 
-const { logout } = useAuthStore();
-const userName = localStorage.getItem('userName') || '사용자';
-const userEmail = localStorage.getItem('userEmail') || 'abc@naver.com';
-const userId = localStorage.getItem('userId') || '';
+/**
+ * 🚩 로그아웃 처리
+ */
+const handleLogout = () => {
+  if (confirm('로그아웃 하시겠습니까?')) {
+    // 1. auth 스토어의 logout 실행 (내부에서 localStorage.clear()와 상태 초기화 수행)
+    authStore.logout();
+
+    // 2. 랜딩 페이지로 이동 (LandingView.vue 경로)
+    router.push('/');
+  }
+};
 </script>
 
 <style scoped>

@@ -58,10 +58,14 @@ export const useAuthStore = defineStore('auth', () => {
         name: userData.name,
         email: userData.email,
         password: userData.password,
-        createdAt: new Date().toLocaleDateString('ko-KR', {
+        createdAt: new Date().toLocaleString('ko-KR', {
           year: 'numeric',
-          month: 'long',
+          month: 'numeric',
           day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: true,
         }),
       });
 
