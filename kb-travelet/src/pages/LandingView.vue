@@ -25,15 +25,8 @@
       </div>
 
       <div class="mb-4">
-<<<<<<< HEAD
-        <div v-if="!isLoginMode" class="mb-3 animate-fade-in">
-          <label class="form-label small fw-bold text-ka-deep ms-1"
-            >닉네임</label
-          >
-=======
         <div class="mb-3">
           <label class="form-label small fw-bold text-ka-deep ms-1">이름</label>
->>>>>>> e62c75bd1d96e02a18879acf34691b52b0638c14
           <input
             v-model="formData.name"
             type="text"
@@ -43,7 +36,9 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label small fw-bold text-ka-deep ms-1">이메일</label>
+          <label class="form-label small fw-bold text-ka-deep ms-1"
+            >이메일</label
+          >
           <input
             v-model="formData.email"
             type="email"
@@ -56,15 +51,10 @@
           </div>
         </div>
 
-<<<<<<< HEAD
-        <div class="mb-3">
+        <div class="mb-2">
           <label class="form-label small fw-bold text-ka-deep ms-1"
             >비밀번호</label
           >
-=======
-        <div class="mb-2">
-          <label class="form-label small fw-bold text-ka-deep ms-1">비밀번호</label>
->>>>>>> e62c75bd1d96e02a18879acf34691b52b0638c14
           <input
             v-model="formData.password"
             type="password"
