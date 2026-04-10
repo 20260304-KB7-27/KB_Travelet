@@ -1,48 +1,5 @@
 {
-  "members": [
-    {
-      "name": "qwe",
-      "email": "qwe@naver.com",
-      "password": "qwe",
-      "createdAt": "2026. 4. 9. 오후 11:53:08",
-      "id": "9djjSdlwdoo"
-    },
-    {
-      "name": "나비",
-      "email": "asd@naver.com",
-      "password": "asd",
-      "createdAt": "2026. 4. 10. 오전 10:02:20",
-      "id": "zmOOxBf"
-    },
-    {
-      "name": "트레블러 ",
-      "email": "tra@naver.com",
-      "password": "tra",
-      "createdAt": "2026. 4. 10. 오후 1:27:08",
-      "id": "1IEbFjH"
-    },
-    {
-      "name": "트",
-      "email": "t@naver.com",
-      "password": "t",
-      "createdAt": "2026. 4. 10. 오후 1:44:35",
-      "id": "gNf1ZdD"
-    },
-    {
-      "name": "r",
-      "email": "r@naver.com",
-      "password": "r",
-      "createdAt": "2026. 4. 10. 오후 2:02:17",
-      "id": "xUugayS"
-    },
-    {
-      "name": "asdf",
-      "email": "asdf@asdf.com",
-      "password": "asdf",
-      "createdAt": "2026. 4. 10. 오후 3:49:19",
-      "id": "i7JfaxcsNb0"
-    }
-  ],
+  "members": [],
   "continents": {
     "Asia": [
       {

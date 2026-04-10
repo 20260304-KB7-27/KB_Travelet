@@ -38,12 +38,6 @@ const routes = [
         meta: { title: '수입 입력', step: 3 },
       },
       {
-<<<<<<< Updated upstream
-        path: 'option',
-        name: 'step-option',
-        component: () => import('@/components/onboarding/StepOption.vue'),
-        meta: { step: 4 },
-=======
         path: 'fixed-expense',
         name: 'step-fixed-expense',
         component: () => import('@/components/onboarding/StepFixedExpense.vue'),
@@ -54,7 +48,6 @@ const routes = [
         name: 'step-option',
         component: () => import('@/components/onboarding/StepOption.vue'),
         meta: { title: '추가 옵션', step: 5 },
->>>>>>> Stashed changes
       },
     ],
   },

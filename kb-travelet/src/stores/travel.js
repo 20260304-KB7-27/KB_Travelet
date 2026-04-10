@@ -15,7 +15,8 @@ export const useTravelStore = defineStore('travel', () => {
   const selectedBudgetOption = ref('');
   const assetAmount = ref(0);
   const monthlyIncome = ref(0);
-  const dailyExpense = ref(0);
+  const dailyTravelExpense = ref(0);
+  const dailyAvailableBudget = ref(0);
   const hotelExpense = ref(0);
   const flightExpense = ref(0);
   const checkedIn = ref(false);
@@ -49,12 +50,11 @@ export const useTravelStore = defineStore('travel', () => {
       endDate: '',
       currentAsset: 0,
       monthlyIncome: 0,
-      monthlyRent: 0,
-      monthlyInsurance: 0,
-      monthlyPhone: 0,
-      monthlyTransport: 0,
-      monthlySubscription: 0,
-      monthlyOtherFixed: 0,
+      budgetOption: '',
+      dailyTravelExpense: 0,
+      dailyAvailableBudget: 0,
+      hotelExpense: 0,
+      flightExpense: 0,
       checkedIn: false,
       isCompleted: false,
     };
@@ -109,13 +109,19 @@ export const useTravelStore = defineStore('travel', () => {
     returnDate.value = nextProfile.endDate || '';
     assetAmount.value = Number(nextProfile.currentAsset) || 0;
     monthlyIncome.value = Number(nextProfile.monthlyIncome) || 0;
-    currentAsset.value = Number(nextProfile.currentAsset) || 0;
     monthlyRent.value = Number(nextProfile.monthlyRent) || 0;
     monthlyInsurance.value = Number(nextProfile.monthlyInsurance) || 0;
     monthlyPhone.value = Number(nextProfile.monthlyPhone) || 0;
     monthlyTransport.value = Number(nextProfile.monthlyTransport) || 0;
     monthlySubscription.value = Number(nextProfile.monthlySubscription) || 0;
     monthlyOtherFixed.value = Number(nextProfile.monthlyOtherFixed) || 0;
+    selectedBudgetOption.value = nextProfile.budgetOption || '';
+    dailyTravelExpense.value =
+      Number(nextProfile.dailyTravelExpense ?? nextProfile.dailyExpense) || 0;
+    dailyAvailableBudget.value = Number(nextProfile.dailyAvailableBudget) || 0;
+    hotelExpense.value = Number(nextProfile.hotelExpense) || 0;
+    flightExpense.value = Number(nextProfile.flightExpense) || 0;
+    checkedIn.value = Boolean(nextProfile.checkedIn);
   }
 
   // 🚩 수정됨: 404 에러 시 로직이 중단되지 않도록 catch 처리
@@ -230,14 +236,14 @@ export const useTravelStore = defineStore('travel', () => {
     const levels = selectedCountry.value?.levels ?? {};
     const [daily = 0, hotel = 0, flight = 0] = levels[levelKey] ?? [];
     return {
-      dailyExpense: daily * 10000,
+      dailyTravelExpense: daily * 10000,
       hotelExpense: hotel * 10000,
       flightExpense: flight * 10000,
     };
   }
 
   function setExpenseOverrides({ daily = 0, hotel = 0, flight = 0 }) {
-    dailyExpense.value = Number(daily) || 0;
+    dailyTravelExpense.value = Number(daily) || 0;
     hotelExpense.value = Number(hotel) || 0;
     flightExpense.value = Number(flight) || 0;
   }
@@ -252,7 +258,7 @@ export const useTravelStore = defineStore('travel', () => {
       flight: normalizedFlight,
     });
     return saveProfile({
-      dailyExpense: normalizedDaily,
+      dailyTravelExpense: normalizedDaily,
       hotelExpense: normalizedHotel,
       flightExpense: normalizedFlight,
     });
@@ -293,17 +299,9 @@ export const useTravelStore = defineStore('travel', () => {
       subscription: Number(ex.subscription) || 0,
       otherFixed: Number(ex.otherFixed) || 0,
     };
-    setFixedExpenses(nEx);
-    return saveProfile({
-      monthlyRent: nEx.rent,
-      monthlyInsurance: nEx.insurance,
-      monthlyPhone: nEx.phone,
-      monthlyTransport: nEx.transport,
-      monthlySubscription: nEx.subscription,
-      monthlyOtherFixed: nEx.otherFixed,
-      checkedIn: false,
-      isCompleted: false,
-    });
+
+    setFixedExpenses(normalizedExpenses);
+    return Promise.resolve(normalizedExpenses);
   }
 
   async function resetSavedProfile() {
@@ -330,14 +328,8 @@ export const useTravelStore = defineStore('travel', () => {
   async function saveFinanceInfo(fi = {}) {
     setFinanceInfo(fi);
     return saveProfile({
-      currentAsset: Number(fi.currentAssetVal) || 0,
-      monthlyIncome: Number(fi.monthlyIncomeVal) || 0,
-      monthlyRent: Number(fi.rentVal) || 0,
-      monthlyInsurance: Number(fi.insuranceVal) || 0,
-      monthlyPhone: Number(fi.phoneVal) || 0,
-      monthlyTransport: Number(fi.transportVal) || 0,
-      monthlySubscription: Number(fi.subscriptionVal) || 0,
-      monthlyOtherFixed: Number(fi.otherFixedVal) || 0,
+      currentAsset: Number(currentAssetVal) || 0,
+      monthlyIncome: Number(monthlyIncomeVal) || 0,
     });
   }
 
@@ -356,6 +348,8 @@ export const useTravelStore = defineStore('travel', () => {
     monthlyTransport.value = 0;
     monthlySubscription.value = 0;
     monthlyOtherFixed.value = 0;
+    dailyTravelExpense.value = 0;
+    dailyAvailableBudget.value = 0;
   }
 
   return {
@@ -369,6 +363,8 @@ export const useTravelStore = defineStore('travel', () => {
     selectedBudgetOption,
     assetAmount,
     monthlyIncome,
+    dailyTravelExpense,
+    dailyAvailableBudget,
     currentAsset,
     monthlyRent,
     monthlyInsurance,
