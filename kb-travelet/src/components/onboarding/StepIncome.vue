@@ -148,6 +148,7 @@ const checkInComplete = async () => {
   }
 
   try {
+    // 자산과 월 수입은 다음 단계의 예산 계산 기준이 된다.
     await travelStore.saveIncomeInfo({
       assets: assetAmount.value,
       income: monthlyIncome.value,
@@ -160,6 +161,7 @@ const checkInComplete = async () => {
 };
 
 function formatToKoreanAmount(value) {
+  // 숫자를 "n억원 m만원" 형식으로 읽기 쉽게 바꾼다.
   const amount = Number(value) || 0;
 
   if (amount <= 0) {
@@ -191,10 +193,12 @@ function formatInputNumber(value) {
 }
 
 function parseInputNumber(value) {
+  // 입력값에서 숫자만 남겨 실제 계산 가능한 값으로 만든다.
   return Number(String(value).replace(/[^\d]/g, '')) || 0;
 }
 
 function handleAmountInput(target, value) {
+  // 자산과 월 수입 입력칸을 각각 독립적으로 갱신한다.
   const parsedValue = parseInputNumber(value);
 
   if (target === 'asset') {
@@ -206,6 +210,7 @@ function handleAmountInput(target, value) {
 }
 
 function adjustAmount(target, delta) {
+  // 스테퍼 버튼으로 금액을 조금씩 조정한다.
   if (target === 'asset') {
     assetAmount.value = Math.max(0, (Number(assetAmount.value) || 0) + delta);
     return;
