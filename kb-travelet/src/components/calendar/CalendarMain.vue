@@ -22,10 +22,43 @@
       </div>
 
       <div class="text-center px-4">
-        <h5 class="fw-bold mb-0">{{ currentYear }}년 {{ currentMonth }}월</h5>
+        <h6 class="text-secondary mb-0">{{ currentYear }}년</h6>
+        <h4 class="fw-bold mb-0">{{ currentMonth }}월</h4>
       </div>
+      <div class="d-flex gap-2 justify-content-end">
+        <div
+          class="p-2 px-3 bg-white rounded-3 text-end border-top border-primary border-4 shadow-sm"
+          style="min-width: 120px"
+        >
+          <div class="text-muted extra-small fw-bold">수익</div>
+          <div class="fw-bold text-primary" style="font-size: 0.9rem">
+            + 2,678,123원
+          </div>
+        </div>
 
-      <div class="d-flex gap-2 justify-content-end"></div>
+        <div
+          class="p-2 px-3 bg-white rounded-3 text-end border-top border-danger border-4 shadow-sm"
+          style="min-width: 120px"
+        >
+          <div class="text-muted extra-small fw-bold">지출</div>
+          <div class="fw-bold text-danger" style="font-size: 0.9rem">
+            - 1,678,000원
+          </div>
+        </div>
+
+        <div
+          class="p-2 px-3 rounded-3 text-end shadow-sm d-flex flex-column justify-content-center"
+          style="background-color: var(--color-primary); min-width: 140px"
+        >
+          <div class="text-white extra-small fw-bold">총 잔액</div>
+          <div
+            class="fw-bold"
+            style="color: var(--color-surface); font-size: 1rem"
+          >
+            + 1,000,123원
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row g-0 text-center mb-2">
@@ -55,7 +88,6 @@
       </div>
     </div>
   </div>
-
   <TransactionModal
     v-if="selectedDate"
     :date="selectedDate"
@@ -80,15 +112,21 @@ const calendarDates = computed(() => {
   const lastDate = new Date(year, month, 0).getDate();
 
   const result = [];
+
+  // 1일 앞은 그냥 '비어있는 객체'를 넣어서 자리만 차지하게 함
   for (let i = 0; i < firstDay; i++) {
-    result.push({ date: null, currentMonth: false });
+    result.push({ year, month, date: null });
   }
+
+  // 실제 날짜만 채움
   for (let d = 1; d <= lastDate; d++) {
-    result.push({ date: d, currentMonth: true });
+    result.push({ year, month, date: d });
   }
+
   return result;
 });
 
+// 이전 달로 이동
 const prevMonth = () => {
   if (currentMonth.value === 1) {
     currentYear.value--;
@@ -98,6 +136,7 @@ const prevMonth = () => {
   }
 };
 
+// 다음 달로 이동
 const nextMonth = () => {
   if (currentMonth.value === 12) {
     currentYear.value++;
@@ -108,22 +147,17 @@ const nextMonth = () => {
 };
 
 /* ---------------------------------------------------------
-🚩 수정된 부분: 캘린더와 모달 연결
---------------------------------------------------------- */
+캘린더와 모달 연결
+*/
 const selectedDate = ref(null);
 
-const handleClickDate = (dayNum) => {
-  // 숫자(dayNum)를 받아서 실제 Date 객체로 변환하여 저장
-  // 월(Month)은 0부터 시작하므로 -1을 해줍니다.
-  selectedDate.value = new Date(
-    currentYear.value,
-    currentMonth.value - 1,
-    dayNum,
-  );
+const handleClickDate = (date) => {
+  selectedDate.value = date;
 };
 </script>
 
 <style scoped>
+/* 7열 그리드를 위한 커스텀 스타일 */
 .col-1-7 {
   flex: 0 0 14.285%;
   max-width: 14.285%;
