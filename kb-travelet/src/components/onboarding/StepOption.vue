@@ -11,7 +11,6 @@
           <div
             class="progress-bar-inner progress-animate"
             style="--progress-start: 80%; --progress-end: 100%; width: 100%"
-            style="--progress-start: 80%; --progress-end: 100%; width: 100%"
           ></div>
         </div>
       </div>
