@@ -108,7 +108,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useAccountStore } from '@/stores/account';
 
 const props = defineProps({
@@ -117,6 +117,11 @@ const props = defineProps({
 });
 
 const store = useAccountStore(); // store 연결
+
+// 데이터 불러오기
+onMounted(() => {
+  store.fetchTransactions();
+});
 
 // 날짜 포맷
 const formattedDate = computed(() => {

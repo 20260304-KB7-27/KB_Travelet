@@ -615,6 +615,26 @@
       }
     ]
   },
+  "transactions": [
+    {
+      "date": "2026-04-09",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 2000,
+      "memo": "커피",
+      "id": 1775787808493,
+      "userId": "9djjSdlwdoo"
+    },
+    {
+      "date": "2026-04-09",
+      "type": "income",
+      "category": "",
+      "amount": 50000,
+      "memo": "로또 당첨",
+      "id": 1775787817061,
+      "userId": "9djjSdlwdoo"
+    }
+  ],
   "profiles": [
     {
       "memberId": "9djjSdlwdoo",
