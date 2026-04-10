@@ -3,17 +3,17 @@
     <div class="onboarding-card shadow-lg mx-auto">
       <div class="progress-container p-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="step-text">STEP 3/4</span>
+          <span class="step-text">STEP 3/5</span>
           <span class="step-label"> 시드 머니 입력</span>
         </div>
         <div class="progress-track">
           <div
             class="progress-bar-inner progress-animate"
-            style="--progress-start: 50%; --progress-end: 75%; width: 75%"
+            style="--progress-start: 40%; --progress-end: 60%; width: 60%"
           ></div>
           <span
             class="progress-plane progress-plane-animate"
-            style="--progress-start: 50%; --progress-end: 75%"
+            style="--progress-start: 40%; --progress-end: 60%"
           >
             <i class="fas fa-plane" aria-hidden="true"></i>
           </span>

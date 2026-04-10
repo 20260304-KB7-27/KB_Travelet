@@ -4,17 +4,17 @@
       <div class="onboarding-card shadow-lg">
         <div class="progress-container p-4">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="step-text">STEP 2/4</span>
+            <span class="step-text">STEP 2/5</span>
             <span class="step-label">여행 일정 선택</span>
           </div>
           <div class="progress-track">
             <div
               class="progress-bar-inner progress-animate"
-              style="--progress-start: 25%; --progress-end: 50%; width: 50%"
+              style="--progress-start: 20%; --progress-end: 40%; width: 40%"
             ></div>
             <span
               class="progress-plane progress-plane-animate"
-              style="--progress-start: 25%; --progress-end: 50%"
+              style="--progress-start: 20%; --progress-end: 40%"
             >
               <i class="fas fa-plane" aria-hidden="true"></i>
             </span>
@@ -24,7 +24,7 @@
         <div class="content-section p-4 p-md-5">
           <div class="schedule-copy mb-4">
             <span class="copy-kicker">Schedule</span>
-            <h2 class="section-title mb-2">언제 여행을</h2>
+            <h2 class="section-title mb-2">언제 여행을 떠나시나요?</h2>
             <p class="section-description mb-0">
               달력에서 출발일과 도착일을 순서대로 선택해주세요
             </p>
@@ -41,9 +41,6 @@
               </button>
               <div class="month-title-wrap">
                 <strong class="month-title">{{ currentMonthLabel }}</strong>
-                <span class="month-subtitle"
-                  >원하는 출발일과 도착일을 한 번에 선택해 주세요</span
-                >
               </div>
               <button type="button" class="month-nav-btn" @click="moveMonth(1)">
                 다음

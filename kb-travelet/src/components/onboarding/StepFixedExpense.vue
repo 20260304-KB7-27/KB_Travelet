@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="onboarding-page-bg">
     <div class="onboarding-card shadow-lg mx-auto">
       <div class="progress-container p-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <span class="step-text">STEP 4/5</span>
-          <span class="step-label">월 고정지출 입력</span>
+          <span class="step-label">고정 지출 입력</span>
         </div>
         <div class="progress-track">
           <div
@@ -23,9 +23,9 @@
       <div class="content-section p-4 p-md-5">
         <div class="expense-copy mb-4">
           <span class="copy-kicker">fixed monthly expense</span>
-          <h2 class="section-title mb-2">월 고정지출을 입력해 주세요</h2>
+          <h2 class="section-title mb-2">월 고정 지출을 입력해 주세요</h2>
           <p class="section-description mb-0">
-            여행 예산 추천 전에 매달 빠져나가는 비용을 먼저 반영할게요.
+            여행 예산을 계산하기 전에 매달 빠져나가는 생활비를 먼저 반영할게요.
           </p>
         </div>
 
@@ -75,8 +75,8 @@
           <span class="summary-caption">Monthly Fixed Total</span>
           <strong class="summary-value">{{ formatWon(totalFixedExpense) }}</strong>
           <p class="summary-description mb-0">
-            이 금액을 기준으로 다음 단계에서 하루 사용 가능 금액과 절약 필요
-            금액을 계산합니다.
+            이 금액을 기준으로 다음 단계에서 선택 가능한 여행 유형을 더 정확하게
+            계산합니다.
           </p>
         </div>
 
@@ -113,7 +113,7 @@ const expenseFields = [
   { key: 'phone', label: '통신비' },
   { key: 'transport', label: '교통비' },
   { key: 'subscription', label: '구독료' },
-  { key: 'otherFixed', label: '기타 고정지출' },
+  { key: 'otherFixed', label: '기타 고정 지출' },
 ];
 
 const totalFixedExpense = computed(() =>
@@ -125,8 +125,8 @@ async function saveAndContinue() {
     await travelStore.saveFixedExpenses({ ...expenses });
     emit('next');
   } catch (error) {
-    console.error('고정지출 저장 실패:', error);
-    alert('고정지출을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    console.error('고정 지출 저장 실패:', error);
+    alert('고정 지출을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 

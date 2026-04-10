@@ -3,13 +3,13 @@
     <div class="onboarding-card shadow-lg mx-auto">
       <div class="progress-container p-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="step-text">STEP 4/4</span>
+          <span class="step-text">STEP 5/5</span>
           <span class="step-label">여행 예산 선택</span>
         </div>
         <div class="progress-track">
           <div
             class="progress-bar-inner progress-animate"
-            style="--progress-start: 75%; --progress-end: 100%; width: 100%"
+            style="--progress-start: 80%; --progress-end: 100%; width: 100%"
           ></div>
         </div>
       </div>
