@@ -29,12 +29,12 @@ export const useAccountStore = defineStore('account', () => {
   const transactions = ref([]);
 
   const addTransaction = async (tx) => {
-    const auth = useAuthStore();
+    const userId = localStorage.getItem('userId');
     try {
       const newTx = {
         ...tx,
         id: tx.id ?? Date.now(),
-        userId: auth.user?.id,
+        userId: userId,
       };
 
       const res = await axios.post('http://localhost:3000/transactions', newTx);
@@ -76,8 +76,15 @@ export const useAccountStore = defineStore('account', () => {
 
   // 초기 데이터 불러오기
   const fetchTransactions = async () => {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) return;
+
     try {
-      const res = await axios.get('http://localhost:3000/transactions');
+      const res = await axios.get(
+        `http://localhost:3000/transactions?userId=${userId}`,
+      );
+
       transactions.value = res.data;
     } catch (err) {
       console.error('거래 불러오기 실패: ', err);
