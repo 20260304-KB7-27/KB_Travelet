@@ -81,6 +81,7 @@
         <CalendarDayBar
           v-if="dayObj.date"
           :calendar-date="dayObj"
+          :key="dayObj.date"
           @selectDate="handleClickDate"
         />
         <div v-else class="h-100 p-2 opacity-25"></div>

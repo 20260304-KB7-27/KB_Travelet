@@ -74,17 +74,18 @@ const viewDailyLedger = () => {
   transition: all 0.2s ease;
   cursor: pointer;
 }
+
 .date-card:hover {
-  transform: translateY(-3px); /* 위로 살짝 들림 */
-  border-color: var(--color-primary-soft); /* 테두리 색 변경 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important; /* 은은한 그림자 */
+  transform: translateY(-3px);
+  border-color: var(--color-primary-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
   z-index: 1;
 }
 
 .date-card:active {
-  transform: translateY(-1px) scale(0.97); /* 꾹 눌리는 효과 */
+  transform: translateY(-1px) scale(0.97);
   background-color: #f8f9fa;
-  transition: all 0.05s; /* 클릭은 즉각적으로! */
+  transition: all 0.05s;
 }
 
 .border-primary.border-2 {
