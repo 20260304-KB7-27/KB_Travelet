@@ -6,6 +6,13 @@
       "password": "abc",
       "createdAt": "2026년 4월 10일",
       "id": "7jCO9J_qYY8"
+    },
+    {
+      "name": "권팀장",
+      "email": "onyo9@naver.com",
+      "password": "1234",
+      "createdAt": "2026년 4월 10일",
+      "id": "jPiQDAs8qGM"
     }
   ],
   "continents": {
@@ -49,12 +56,20 @@
       {
         "name": "필리핀",
         "code": "PH",
-        "levels": { "eco": [3, 3, 30], "std": [8, 9, 52], "lux": [20, 30, 125] }
+        "levels": {
+          "eco": [3, 3, 30],
+          "std": [8, 9, 52],
+          "lux": [20, 30, 125]
+        }
       },
       {
         "name": "베트남",
         "code": "VN",
-        "levels": { "eco": [3, 2, 33], "std": [7, 8, 55], "lux": [20, 30, 135] }
+        "levels": {
+          "eco": [3, 2, 33],
+          "std": [7, 8, 55],
+          "lux": [20, 30, 135]
+        }
       },
       {
         "name": "싱가포르",
@@ -282,6 +297,33 @@
       "memo": "커피",
       "id": "DNhFVygjDMg",
       "userId": "7jCO9J_qYY8"
+    },
+    {
+      "date": "2026-04-07",
+      "type": "income",
+      "category": "식비/카페",
+      "amount": 100000,
+      "memo": "우수 수료생",
+      "id": "nRkhvYHUUDo",
+      "userId": "jPiQDAs8qGM"
+    },
+    {
+      "date": "2026-04-07",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 50000,
+      "memo": "횟집",
+      "id": "S15LTa-MoBI",
+      "userId": "jPiQDAs8qGM"
+    },
+    {
+      "id": "fikGQpRBP-Y",
+      "date": "2026-04-24",
+      "type": "income",
+      "category": "식비/카페",
+      "amount": 550000,
+      "memo": "교육지원금",
+      "userId": "jPiQDAs8qGM"
     }
   ],
   "profiles": [
@@ -303,11 +345,28 @@
       "checkedIn": true,
       "id": "3_k-fFBf5xw",
       "budgetOption": "standard",
-      "dailyExpense": 200000,
-      "hotelExpense": 200000,
+      "dailyExpense": 1200000,
+      "hotelExpense": 1500000,
       "flightExpense": 550000,
       "continent": "유럽",
       "country": "아이슬란드"
+    },
+    {
+      "memberId": "jPiQDAs8qGM",
+      "destination": "독일",
+      "destinationCode": "DE",
+      "startDate": "2026-04-23",
+      "endDate": "2026-04-29",
+      "currentAsset": 6000000,
+      "monthlyIncome": 3000000,
+      "budgetOption": "standard",
+      "dailyTravelExpense": 200000,
+      "dailyAvailableBudget": 225000,
+      "hotelExpense": 250000,
+      "flightExpense": 1800000,
+      "checkedIn": true,
+      "isCompleted": false,
+      "id": "AtpTuEFoeX8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

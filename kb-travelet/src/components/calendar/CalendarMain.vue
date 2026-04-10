@@ -7,7 +7,49 @@
         gridTemplateColumns: isMobile ? '1fr' : '1fr auto 1fr',
       }"
     >
-      <div class="d-none d-lg-block"></div>
+      <div class="d-none d-lg-block">
+        <div v-if="myTravelGoal" class="d-flex gap-2" style="min-width: 160px">
+          <div
+            class="p-2 px-3 rounded-3 text-end border-4 shadow-sm"
+            style="min-width: 120px; background-color: var(--color-primary)"
+          >
+            <div class="text-white extra-small fw-bold">고정 수입</div>
+            <div class="fw-bold text-white" style="font-size: 0.9rem">
+              + {{ (monthlyIncomeTotal || 0).toLocaleString() }}원
+            </div>
+          </div>
+          <div
+            class="p-2 px-3 bg-danger rounded-3 text-end border-4 shadow-sm"
+            style="min-width: 120px"
+          >
+            <div class="text-white extra-small fw-bold">고정 지출</div>
+            <div class="fw-bold text-white" style="font-size: 0.9rem">
+              - {{ (fixedExpensesTotal || 0).toLocaleString() }}원
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-else
+          style="
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            background-color: var(--color-primary-soft);
+            opacity: 0.6;
+          "
+        >
+          <span
+            style="
+              font-size: 0.7rem;
+              font-weight: bold;
+              color: var(--color-primary-deep);
+            "
+          >
+            데이터 로딩 중...
+          </span>
+        </div>
+      </div>
 
       <div
         class="d-flex align-items-center justify-content-center order-1 order-lg-2"
@@ -32,18 +74,16 @@
         </button>
       </div>
 
-      <div class="text-center px-4">
-        <h6 class="text-secondary mb-0">{{ currentYear }}년</h6>
-        <h4 class="fw-bold mb-0">{{ currentMonth }}월</h4>
-      </div>
-      <div class="d-flex gap-2 justify-content-end">
+      <div
+        class="d-flex gap-2 order-2 order-lg-3 justify-content-center justify-content-lg-end"
+      >
         <div
           class="p-2 px-3 bg-white rounded-3 text-end border-top border-primary border-4 shadow-sm"
           style="min-width: 120px"
         >
           <div class="text-muted extra-small fw-bold">수익</div>
           <div class="fw-bold text-primary" style="font-size: 0.9rem">
-            + 2,678,123원
+            + {{ monthlySummary.income.toLocaleString() }}원
           </div>
         </div>
 
@@ -53,7 +93,7 @@
         >
           <div class="text-muted extra-small fw-bold">지출</div>
           <div class="fw-bold text-danger" style="font-size: 0.9rem">
-            - 1,678,000원
+            - {{ monthlySummary.expense.toLocaleString() }}원
           </div>
         </div>
 
@@ -66,7 +106,9 @@
             class="fw-bold"
             style="color: var(--color-surface); font-size: 1rem"
           >
-            + 1,000,123원
+            {{
+              (monthlySummary.income - monthlySummary.expense).toLocaleString()
+            }}원
           </div>
         </div>
       </div>
@@ -108,32 +150,32 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import CalendarDayBar from './CalendarDayBar.vue';
 import TransactionModal from '../modal/TransactionModal.vue';
 import { useAccountStore } from '@/stores/account';
 import { useProfileStore } from '@/stores/profile';
-const { myTravelGoal } = useProfileStore();
+import { storeToRefs } from 'pinia';
 
+const profileStore = useProfileStore();
+const { myTravelGoal, fixedExpensesTotal, monthlyIncomeTotal } =
+  storeToRefs(profileStore);
 const store = useAccountStore();
+
+// script setup 내부
 const monthlySummary = computed(() => {
   const summary = {
     income: 0,
     expense: 0,
   };
 
-  // 비교할 문자열 만들기 (예: "2026-04")
-  // 월이 10보다 작을 때 앞에 0을 붙여줘야 데이터 포맷("04")과 일치합니다.
   const yearMonthPrefix = `${currentYear.value}-${String(currentMonth.value).padStart(2, '0')}`;
 
+  // 🚩 오직 실제 거래 내역만 합산!
   store.transactions.forEach((t) => {
-    // 해당 년/월로 시작하는 데이터만 합산
     if (t.date.startsWith(yearMonthPrefix)) {
-      if (t.type === 'income') {
-        summary.income += t.amount;
-      } else {
-        summary.expense += t.amount;
-      }
+      if (t.type === 'income') summary.income += t.amount;
+      else summary.expense += t.amount;
     }
   });
 
@@ -218,6 +260,11 @@ const dailySummary = computed(() => {
   });
 
   return result;
+});
+
+onMounted(() => {
+  console.log('myTravelGoal:', myTravelGoal.value);
+  profileStore.fetchTravelGoal();
 });
 </script>
 
