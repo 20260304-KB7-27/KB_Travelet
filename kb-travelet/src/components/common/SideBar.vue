@@ -1,15 +1,119 @@
 <template>
-  
+  <div
+    class="d-flex flex-column p-3 text-white h-100"
+    style="background-color: var(--color-primary)"
+  >
+    <div class="bg-white text-dark rounded-4 p-3 mb-4 mt-2">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <span class="fw-bold small text-primary" style="letter-spacing: 1px">
+          <i class="fa-solid fa-ticket" style="color: var(--color-primary)"></i>
+          TRAVEL PASS</span
+        >
+      </div>
+      <h4 class="fw-bold mb-0">{{ userName }}</h4>
+      <p class="text-muted small mb-3">{{ userEmail }}</p>
+      <div class="d-flex border-top pt-2 justify-content-between">
+        <div class="d-flex flex-column gap-1">
+          <span
+            class="text-muted extra-small fw-bold text-uppercase tracking-wider"
+            >Destination</span
+          >
+          <div class="d-flex align-items-center gap-2">
+            <div
+              class="bg-light rounded-3 p-1 text-center border"
+              style="min-width: 20px"
+            >
+              <span
+                class="d-block fw-black text-primary lh-1"
+                style="font-size: 0.6rem"
+                >{{ myTravelGoal?.destinationCode }}</span
+              >
+            </div>
+
+            <div class="flex-grow-1" style="max-width: 150px">
+              <span class="fw-bold fs-6 lh-sm d-block">{{
+                myTravelGoal?.destination
+              }}</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="text-muted extra-small d-block">일정</span>
+          <span class="fs-7 fw-bold"
+            >{{ myTravelGoal?.startDate }} <br />-{{
+              myTravelGoal?.endDate
+            }}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <RouterLink to="/main" class="nav-link text-white rounded-3 py-3 mb-2">
+          <i class="fas fa-home me-2"></i> 홈
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink
+          to="/profile"
+          class="nav-link text-white rounded-3 py-3 mb-2"
+        >
+          <i class="fas fa-cog me-2"></i> 설정
+        </RouterLink>
+      </li>
+    </ul>
+    <div
+      class="flex-grow-1 rounded-3 p-3 my-3 bg-white d-flex flex-column align-items-center justify-content-center"
+    >
+      <p>
+        <i
+          class="fa-solid fa-money-bill-1-wave fa-2xl"
+          style="color: var(--color-primary)"
+        ></i>
+      </p>
+      <p
+        class="mb-0 fw-bold small text-center"
+        style="color: var(--color-primary-deep); line-height: 1.5"
+      >
+        <i class="fa-solid fa-circle-info me-1"></i>
+        {{ myTravelGoal?.destination }} 여행을 위해 <br />하루에
+        <span class="text-primary">0원</span>씩 사용할 수 있어요
+      </p>
+    </div>
+
+    <div class="mt-auto border-top border-white-50 pt-3">
+      <button
+        @click="logout"
+        class="btn btn-link text-white-50 p-0 text-decoration-none small"
+      >
+        <i class="fas fa-sign-out-alt me-1"></i> 로그아웃
+      </button>
+    </div>
+  </div>
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/auth';
+import { useProfileStore } from '@/stores/profile.js';
+import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 
+const profileStore = useProfileStore();
+const { myTravelGoal } = storeToRefs(profileStore);
 
-
+const { logout } = useAuthStore();
+const userName = localStorage.getItem('userName') || '사용자';
+const userEmail = localStorage.getItem('userEmail') || 'abc@naver.com';
+const userId = localStorage.getItem('userId') || '';
 </script>
 
 <style scoped>
-
-
-
+.extra-small {
+  font-size: 0.7rem;
+}
+.nav-link:hover {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
 </style>
