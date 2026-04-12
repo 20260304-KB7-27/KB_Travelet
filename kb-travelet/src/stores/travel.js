@@ -20,6 +20,7 @@ export const useTravelStore = defineStore('travel', () => {
   const hotelExpense = ref(0);
   const flightExpense = ref(0);
   const checkedIn = ref(false);
+  const profileCreatedAt = ref('');
 
   // 재정 정보 상태
   const currentAsset = ref(0);
@@ -42,10 +43,18 @@ export const useTravelStore = defineStore('travel', () => {
     return authStore.user?.id || localStorage.getItem('userId') || '';
   }
 
+  function formatProfileDate(date = new Date()) {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   function createDefaultProfile(memberId) {
     // json-server에 저장할 기본 여행 프로필 형태를 정의한다.
     return {
       memberId,
+      createdAt: '',
       destination: '',
       destinationCode: '',
       startDate: '',
@@ -126,6 +135,7 @@ export const useTravelStore = defineStore('travel', () => {
     monthlySubscription.value = Number(nextProfile.monthlySubscription) || 0;
     monthlyOtherFixed.value = Number(nextProfile.monthlyOtherFixed) || 0;
     selectedBudgetOption.value = nextProfile.budgetOption || '';
+    profileCreatedAt.value = nextProfile.createdAt || '';
     dailyTravelExpense.value =
       Number(nextProfile.dailyTravelExpense ?? nextProfile.dailyExpense) || 0;
     dailyAvailableBudget.value = Number(nextProfile.dailyAvailableBudget) || 0;
@@ -181,6 +191,10 @@ export const useTravelStore = defineStore('travel', () => {
       ...patch,
       memberId,
     };
+
+    if (!currentProfile?.id && !nextProfile.createdAt) {
+      nextProfile.createdAt = formatProfileDate();
+    }
 
     const savedProfile = currentProfile?.id
       ? await api.patch(`/profiles/${currentProfile.id}`, nextProfile)
@@ -345,7 +359,16 @@ export const useTravelStore = defineStore('travel', () => {
     };
 
     setFixedExpenses(normalizedExpenses);
-    return Promise.resolve(normalizedExpenses);
+    return saveProfile({
+      monthlyRent: normalizedExpenses.rent,
+      monthlyInsurance: normalizedExpenses.insurance,
+      monthlyPhone: normalizedExpenses.phone,
+      monthlyTransport: normalizedExpenses.transport,
+      monthlySubscription: normalizedExpenses.subscription,
+      monthlyOtherFixed: normalizedExpenses.otherFixed,
+      checkedIn: false,
+      isCompleted: false,
+    });
   }
 
   async function resetSavedProfile() {
@@ -429,6 +452,8 @@ export const useTravelStore = defineStore('travel', () => {
     monthlyOtherFixed.value = 0;
     dailyTravelExpense.value = 0;
     dailyAvailableBudget.value = 0;
+    checkedIn.value = false;
+    profileCreatedAt.value = '';
   }
 
   return {
@@ -444,6 +469,8 @@ export const useTravelStore = defineStore('travel', () => {
     monthlyIncome,
     dailyTravelExpense,
     dailyAvailableBudget,
+    checkedIn,
+    profileCreatedAt,
     currentAsset,
     monthlyRent,
     monthlyInsurance,
