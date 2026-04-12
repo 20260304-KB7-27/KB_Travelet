@@ -142,10 +142,7 @@ export const useTravelStore = defineStore('travel', () => {
     }
 
     const profiles = await api.get('/profiles', {
-      params: {
-        memberId,
-        isCompleted: false, // 완료되지 않은(진행 중인) 목표만 조회
-      },
+      params: { memberId, isCompleted: false },
     });
 
     return Array.isArray(profiles) ? (profiles[0] ?? null) : null;
