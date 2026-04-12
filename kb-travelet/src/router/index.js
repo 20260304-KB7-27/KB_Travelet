@@ -39,6 +39,12 @@ const routes = [
         meta: { title: '수입 입력', step: 3 },
       },
       {
+        path: 'fixed-expense',
+        name: 'step-fixed-expense',
+        component: () => import('@/components/onboarding/StepFixedExpense.vue'),
+        meta: { step: 4 },
+      },
+      {
         path: 'option',
         name: 'step-option',
         component: () => import('@/components/onboarding/StepOption.vue'),
