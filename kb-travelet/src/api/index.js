@@ -2,16 +2,12 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 
-const apiBaseUrl = (
-  import.meta.env.VITE_API_BASE_URL?.trim() || '/api'
-).replace(/\/+$/, '');
-
 /**
  * Axios 인스턴스 생성
  * 개발 환경에서는 '/api' 프록시를, 배포 환경에서는 환경변수 기반 API 주소를 사용합니다.
  */
 const api = axios.create({
-  baseURL: apiBaseUrl,
+  baseURL: '/api',
   timeout: 8000, // 통신 타임아웃 (8초)
   headers: {
     'Content-Type': 'application/json',
