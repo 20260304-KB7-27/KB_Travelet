@@ -1,6 +1,6 @@
-// index.js
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import router from '@/router'; // 라우터 추가
 
 /**
  * [중요] 빌드 에러 해결을 위한 변수 정의 및 export
@@ -19,10 +19,6 @@ const api = axios.create({
   },
 });
 
-/**
- * [요청 인터셉터]
- * 서버로 요청을 보내기 직전에 실행됩니다.
- */
 api.interceptors.request.use(
   (config) => {
     // 인스턴스 내부에서 store를 불러와야 에러가 발생하지 않습니다.
@@ -36,7 +32,6 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error('[API Request Error]', error);
     return Promise.reject(error);
   },
 );
@@ -51,7 +46,7 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      const { status } = error.response;
+      const { status, config } = error.response;
       const authStore = useAuthStore();
 
       switch (status) {
@@ -67,7 +62,7 @@ api.interceptors.response.use(
           console.error('[404] 요청하신 리소스를 찾을 수 없습니다.');
           break;
         case 500:
-          console.error('[500] 서버 내부 오류가 발생했습니다.');
+          console.error('[500] 서버 오류 발생');
           break;
         default:
           console.error(`[${status}] 에러 발생`);
@@ -80,6 +75,7 @@ api.interceptors.response.use(
       console.error('[API Error]', error.message);
     }
 
+    // 에러를 컴포넌트의 .catch()나 try-catch로 넘겨줌
     return Promise.reject(error);
   },
 );
