@@ -88,7 +88,7 @@
       >
         <i class="fa-solid fa-circle-info me-1"></i>
         {{ myTravelGoal?.destination }} 여행을 위해 <br />하루에
-        <span class="text-primary">0원</span>씩 사용할 수 있어요
+        <span class="text-primary">{{ myTravelGoal?.dailyAvailableBudget?.toLocaleString() }}원</span>씩 사용할 수 있어요
       </p>
     </div>
     <div
@@ -128,9 +128,7 @@
 import { useAuthStore } from '@/stores/auth';
 import { useProfileStore } from '@/stores/profile.js';
 import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
 const profileStore = useProfileStore();
 const { createNewGoal } = profileStore;
 const { myTravelGoal } = storeToRefs(profileStore);

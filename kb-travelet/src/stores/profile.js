@@ -39,7 +39,7 @@ export const useProfileStore = defineStore('profile', () => {
   const createNewGoal = () => {
     if (confirm('새 여행 목표를 등록하러 가볼까요?')) {
       localStorage.setItem('onboarded', 'false'); // 온보딩 상태 초기화
-      router.push('/onboarding');
+      router.push('/check-in');
     }
   };
 

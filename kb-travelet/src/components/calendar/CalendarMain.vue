@@ -4,7 +4,9 @@
       class="align-items-center mb-4 gap-3"
       style="display: grid; width: 100%"
       :style="{
+        // PC(lg 이상)는 3열 / 모바일은 1열로 쌓기
         gridTemplateColumns: isMobile ? '1fr' : '1fr auto 1fr',
+        rowGap: isMobile ? '1.5rem' : '0',
       }"
     >
       <div class="d-none d-lg-block">
@@ -24,7 +26,7 @@
           >
             <div class="text-white extra-small fw-bold">고정 지출</div>
             <div class="fw-bold text-white" style="font-size: 0.9rem">
-              - {{ (fixedExpensesTotal || 0).toLocaleString() }}원
+              - {{ (monthlyExpensesTotal || 0).toLocaleString() }}원
             </div>
           </div>
         </div>
@@ -53,6 +55,7 @@
 
       <div
         class="d-flex align-items-center justify-content-center order-1 order-lg-2"
+        :style="{ order: isMobile ? 1 : 2 }"
       >
         <button
           @click="prevMonth"
@@ -73,38 +76,58 @@
           <i class="fas fa-chevron-right fa-xs"></i>
         </button>
       </div>
-
       <div
-        class="d-flex gap-2 order-2 order-lg-3 justify-content-center justify-content-lg-end"
+        class="d-flex gap-1 gap-md-2 order-2 order-lg-3 justify-content-center justify-content-lg-end"
+        style="flex-wrap: nowrap; overflow: hidden"
+        :style="{
+          order: isMobile ? 2 : 3,
+          width: '100%',
+        }"
       >
         <div
-          class="p-2 px-3 bg-white rounded-3 text-end border-top border-primary border-4 shadow-sm"
-          style="min-width: 120px"
+          class="p-2 px-md-3 bg-white rounded-3 text-end border-top border-primary border-4 shadow-sm"
+          style="min-width: 85px; flex: 1"
         >
-          <div class="text-muted extra-small fw-bold">수익</div>
-          <div class="fw-bold text-primary" style="font-size: 0.9rem">
-            + {{ monthlySummary.income.toLocaleString() }}원
+          <div class="text-muted extra-small fw-bold" style="font-size: 0.6rem">
+            수익
           </div>
-        </div>
-
-        <div
-          class="p-2 px-3 bg-white rounded-3 text-end border-top border-danger border-4 shadow-sm"
-          style="min-width: 120px"
-        >
-          <div class="text-muted extra-small fw-bold">지출</div>
-          <div class="fw-bold text-danger" style="font-size: 0.9rem">
-            - {{ monthlySummary.expense.toLocaleString() }}원
-          </div>
-        </div>
-
-        <div
-          class="p-2 px-3 rounded-3 text-end shadow-sm d-flex flex-column justify-content-center"
-          style="background-color: var(--color-primary); min-width: 140px"
-        >
-          <div class="text-white extra-small fw-bold">총 잔액</div>
           <div
-            class="fw-bold"
-            style="color: var(--color-surface); font-size: 1rem"
+            class="fw-bold text-primary"
+            style="font-size: 0.8rem; white-space: nowrap"
+          >
+            +{{ monthlySummary.income.toLocaleString() }}원
+          </div>
+        </div>
+
+        <div
+          class="p-2 px-md-3 bg-white rounded-3 text-end border-top border-danger border-4 shadow-sm"
+          style="min-width: 85px; flex: 1"
+        >
+          <div class="text-muted extra-small fw-bold" style="font-size: 0.6rem">
+            지출
+          </div>
+          <div
+            class="fw-bold text-danger"
+            style="font-size: 0.8rem; white-space: nowrap"
+          >
+            -{{ monthlySummary.expense.toLocaleString() }}원
+          </div>
+        </div>
+
+        <div
+          class="p-2 px-md-3 rounded-3 text-end shadow-sm d-flex flex-column justify-content-center"
+          style="
+            background-color: var(--color-primary);
+            min-width: 95px;
+            flex: 1.2;
+          "
+        >
+          <div class="text-white extra-small fw-bold" style="font-size: 0.6rem">
+            총 잔액
+          </div>
+          <div
+            class="fw-bold text-white"
+            style="font-size: 0.85rem; white-space: nowrap"
           >
             {{
               (monthlySummary.income - monthlySummary.expense).toLocaleString()
@@ -262,7 +285,15 @@ const dailySummary = computed(() => {
   return result;
 });
 
+const isMobile = ref(window.innerWidth < 992);
+
+const updateWidth = () => {
+  isMobile.value = window.innerWidth < 992;
+};
+
 onMounted(() => {
+  window.addEventListener('resize', updateWidth);
+
   console.log('myTravelGoal:', myTravelGoal.value);
   profileStore.fetchTravelGoal();
 });

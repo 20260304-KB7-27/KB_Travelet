@@ -203,7 +203,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <span class="small fw-bold">하루경비(1일)</span>
           <input
-            v-model.number="modelValue.dailyExpense"
+            v-model.number="modelValue.dailyTravelExpense"
             type="text"
             inputmode="numeric"
             class="form-control form-control-sm w-50 text-end border-0 bg-white"
