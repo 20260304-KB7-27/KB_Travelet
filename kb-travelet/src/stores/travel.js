@@ -306,8 +306,8 @@ export const useTravelStore = defineStore('travel', () => {
       otherFixed: Number(ex.otherFixed) || 0,
     };
 
-    setFixedExpenses(normalizedExpenses);
-    return Promise.resolve(normalizedExpenses);
+    setFixedExpenses(nEx);
+    return Promise.resolve(nEx);
   }
 
   async function resetSavedProfile() {

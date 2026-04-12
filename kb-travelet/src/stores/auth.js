@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import axios from 'axios';
-import router from '@/router';
+import { useRouter } from 'vue-router';
 
 export const useAuthStore = defineStore('auth', () => {
   // 🚩 새로고침 시 email 정보도 포함하여 복구
@@ -18,6 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || null);
   const isAuthenticated = computed(() => !!token.value);
   const API_URL = '/api/members';
+  const router = useRouter();
 
   const setSession = (userData) => {
     user.value = userData;
