@@ -61,12 +61,8 @@ import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
 
 const profileStore = useProfileStore();
-<<<<<<< HEAD
-const { myTravelGoal } = storeToRefs(profileStore); // 반응성 유지
-=======
 const { updateTravelGoal, finishTravelGoal, createNewGoal } = useProfileStore();
 const { myTravelGoal, hasGoal } = storeToRefs(profileStore); // 반응성 유지
->>>>>>> develop
 
 const handleGoalUpdate = async (newData) => {
   const success = await updateTravelGoal(newData);
