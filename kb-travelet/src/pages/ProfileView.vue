@@ -84,15 +84,6 @@ onMounted(() => {
 });
 
 const router = useRouter();
-<<<<<<< HEAD
-
-const createNewGoal = () => {
-  if (confirm('새 여행 목표를 등록하러 가볼까요?')) {
-    router.push('/check-in');
-  }
-};
-
-=======
 const userId = localStorage.getItem('userId');
 
 const getTravelGoal = async () => {
@@ -108,7 +99,6 @@ const getTravelGoal = async () => {
     console.error('여행 목표 로드 에러:', error);
   }
 };
->>>>>>> develop
 </script>
 
 <style scoped>
