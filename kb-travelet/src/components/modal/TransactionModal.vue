@@ -62,7 +62,7 @@
           <label>금액 (원)</label>
           <input
             v-model="amount"
-            type="number"
+            type="text"
             class="input"
             placeholder="금액을 입력하세요(숫자만)"
             @keydown="blockInvalidKeys"
