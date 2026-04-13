@@ -1,5 +1,13 @@
 {
-  "members": [],
+  "members": [
+    {
+      "name": "최윤호",
+      "email": "example@gmail.com",
+      "password": "example",
+      "createdAt": "2026. 4. 13. 오전 9:35:36",
+      "id": 1
+    }
+  ],
   "continents": {
     "Asia": [
       {
@@ -255,7 +263,591 @@
       }
     ]
   },
-  "transactions": [],
-  "profiles": [],
+  "transactions": [
+    {
+      "date": "2026-03-01",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 16000,
+      "memo": "영화관",
+      "id": 1776040681214,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-01",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 18000,
+      "memo": "배민",
+      "id": 1776040695577,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-01",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 12500,
+      "memo": "카페 - 로스티드 바이",
+      "id": 1776040708604,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-02",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 13700,
+      "memo": "배민 - 커피",
+      "id": 1776040737532,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-02",
+      "type": "expense",
+      "category": "기타",
+      "amount": 5900,
+      "memo": "토스 프라임 구독료",
+      "id": 1776040753792,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-04",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 77410,
+      "memo": "옷 쇼핑 - 무신사 ",
+      "id": 1776040785931,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-04",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 2590,
+      "memo": "올리브영",
+      "id": 1776040851729,
+      "userId": "1"
+    },
+    {
+      "id": 1776040892410,
+      "date": "2026-03-05",
+      "type": "income",
+      "category": "수입",
+      "amount": 130000,
+      "memo": "당근 - 옷",
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-05",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 7000,
+      "memo": "원갈비",
+      "id": 1776040931170,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-06",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776040949718,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-06",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1600,
+      "memo": "매머드커피",
+      "id": 1776040960863,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-06",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 8500,
+      "memo": "신사골감자탕",
+      "id": 1776040977738,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-07",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 31140,
+      "memo": "파파존스",
+      "id": 1776041007978,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-07",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 23000,
+      "memo": "게임 구매 - Slay The Spire 2",
+      "id": 1776041029047,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-08",
+      "type": "expense",
+      "category": "기타",
+      "amount": 1990,
+      "memo": "배민클럽 구독료",
+      "id": 1776041067004,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-09",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 12000,
+      "memo": "세종원",
+      "id": 1776041117135,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-09",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776041128047,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-09",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776041138465,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-10",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776041169613,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-10",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 3000,
+      "memo": "컴포즈커피",
+      "id": 1776041178321,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-11",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776041479812,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-11",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 7000,
+      "memo": "원갈비",
+      "id": 1776041492720,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-12",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 9000,
+      "memo": "행복한그릇",
+      "id": 1776042035758,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-12",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 3000,
+      "memo": "컴포즈커피",
+      "id": 1776042045096,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-12",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 22100,
+      "memo": "쿠팡 - 휴대폰 케이스 구매 ",
+      "id": 1776042072493,
+      "userId": "1"
+    },
+    {
+      "id": 1776042087982,
+      "date": "2026-03-13",
+      "type": "expense",
+      "category": "기타",
+      "amount": 165000,
+      "memo": "티빙 연간 구독료",
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-14",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 9100,
+      "memo": "편의점",
+      "id": 1776042127830,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-14",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 38500,
+      "memo": "고가네숯불구이통닭",
+      "id": 1776042142387,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-14",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 3000,
+      "memo": "인형뽑기",
+      "id": 1776042155498,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-16",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 29900,
+      "memo": "배민 - 국밥",
+      "id": 1776042182078,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-16",
+      "type": "income",
+      "category": "식비/카페",
+      "amount": 30000,
+      "memo": "배민",
+      "id": 1776042204661,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-17",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 3000,
+      "memo": "컴포즈커피",
+      "id": 1776042243827,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-17",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 3600,
+      "memo": "컴포즈커피",
+      "id": 1776042256749,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-17",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 8900,
+      "memo": "혼다라멘",
+      "id": 1776042272529,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-17",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 147000,
+      "memo": "옷 쇼핑",
+      "id": 1776042285790,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-18",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 8200,
+      "memo": "맘스터치",
+      "id": 1776042298368,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-19",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 9000,
+      "memo": "부대찌개",
+      "id": 1776042309468,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-19",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776042315303,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-20",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 6500,
+      "memo": "편의점",
+      "id": 1776042372986,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-21",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 25000,
+      "memo": "언플러그드 공연",
+      "id": 1776042419727,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-21",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 12000,
+      "memo": "언플러그드 카페",
+      "id": 1776042430146,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-21",
+      "type": "expense",
+      "category": "교통",
+      "amount": 7800,
+      "memo": "택시",
+      "id": 1776042440067,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-22",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 21000,
+      "memo": "배민",
+      "id": 1776042453822,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-23",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 14400,
+      "memo": "돈카츠",
+      "id": 1776042467218,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-23",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776042473892,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-24",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 47000,
+      "memo": "LG 야구 티켓 구매 ",
+      "id": 1776042503855,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-24",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 65000,
+      "memo": "옷 쇼핑",
+      "id": 1776042517491,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-25",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 13400,
+      "memo": "맥도날드",
+      "id": 1776042533173,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-25",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776042544515,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-26",
+      "type": "expense",
+      "category": "문화생활",
+      "amount": 22500,
+      "memo": "yes24 - 책 구매",
+      "id": 1776042575115,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-26",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 10000,
+      "memo": "마당족발",
+      "id": 1776042586440,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-26",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 3600,
+      "memo": "컴포즈커피",
+      "id": 1776042597502,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-26",
+      "type": "income",
+      "category": "식비/카페",
+      "amount": 50000,
+      "memo": "중고 거래 - 옷",
+      "id": 1776042611872,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-27",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 13500,
+      "memo": "멘츠루",
+      "id": 1776042622223,
+      "userId": "1"
+    },
+    {
+      "id": 1776042632948,
+      "date": "2026-03-28",
+      "type": "expense",
+      "category": "기타",
+      "amount": 6500,
+      "memo": "이비인후과",
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-28",
+      "type": "expense",
+      "category": "기타",
+      "amount": 6500,
+      "memo": "약국",
+      "id": 1776042646178,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-28",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 25000,
+      "memo": "편의점",
+      "id": 1776042670441,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-31",
+      "type": "expense",
+      "category": "기타",
+      "amount": 15000,
+      "memo": "계좌이체",
+      "id": 1776042718164,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-31",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 1800,
+      "memo": "컴포즈커피",
+      "id": 1776042741497,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-31",
+      "type": "expense",
+      "category": "쇼핑",
+      "amount": 3000,
+      "memo": "다이소",
+      "id": 1776042750482,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-10",
+      "type": "income",
+      "category": "식비/카페",
+      "amount": 3000000,
+      "memo": "월급",
+      "id": 1776042933381,
+      "userId": "1"
+    },
+    {
+      "date": "2026-03-03",
+      "type": "expense",
+      "category": "식비/카페",
+      "amount": 333333,
+      "memo": "",
+      "id": 1776043616121,
+      "userId": "1"
+    }
+  ],
+  "profiles": [
+    {
+      "memberId": 1,
+      "createdAt": "2026-03-13",
+      "destination": "일본",
+      "destinationCode": "JP",
+      "startDate": "2026-12-23",
+      "endDate": "2027-01-02",
+      "currentAsset": 5000000,
+      "monthlyIncome": 3000000,
+      "budgetOption": "standard",
+      "dailyTravelExpense": 150000,
+      "dailyAvailableBudget": 83500,
+      "hotelExpense": 180000,
+      "flightExpense": 450000,
+      "checkedIn": true,
+      "isCompleted": false,
+      "id": 1,
+      "monthlyRent": 0,
+      "monthlyInsurance": 150000,
+      "monthlyPhone": 60000,
+      "monthlyTransport": 60000,
+      "monthlySubscription": 45000,
+      "monthlyOtherFixed": 0
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
