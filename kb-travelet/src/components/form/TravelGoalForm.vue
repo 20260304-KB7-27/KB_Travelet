@@ -439,6 +439,8 @@ const updateDestinationCode = () => {
   if (countryObj) {
     props.modelValue.destination = countryObj.name;
     props.modelValue.destinationCode = countryObj.code;
+
+    travelStore.selectedCountry = countryObj;
   }
 };
 
