@@ -173,8 +173,9 @@
               class="recommend-card p-2 border rounded-4 h-100 shadow-sm transition-all position-relative"
               :class="{
                 'bg-white': opt.isSelectable,
-                'bg-danger-subtle border-danger opacity-75': !opt.isSelectable, // 🚩 예산 부족 시 빨간 배경
+                'bg-danger-subtle border-danger opacity-75': !opt.isSelectable, //  예산 부족 시 빨간 배경
                 'cursor-not-allowed': !opt.isSelectable,
+                'selected-card': selectedOption === opt.key, // 선택 시 파란 배경
               }"
               :style="
                 !opt.isSelectable ? 'cursor: not-allowed;' : 'cursor: pointer;'
@@ -302,6 +303,9 @@ const continentNameMap = {
   Oceania: '오세아니아',
 };
 
+// 선택 상태 변수
+const selectedOption = ref(null);
+
 // --- Computed ---
 const continentOptions = computed(() => {
   return Object.keys(continentList.value).map((key) => ({
@@ -415,6 +419,9 @@ const toggleOptions = () => {
 
 const applyOption = (opt) => {
   if (!opt.isSelectable) return;
+
+  selectedOption.value = opt.key;
+
   props.modelValue.flightExpense = opt.flightExpense;
   props.modelValue.hotelExpense = opt.hotelExpense;
   props.modelValue.dailyTravelExpense = opt.dailyTravelExpense;
@@ -497,5 +504,11 @@ onMounted(() => {
 }
 .w-40 {
   width: 40% !important;
+}
+
+.selected-card {
+  border: 2px solid #0766ff !important;
+  background: #eaf2ff !important;
+  box-shadow: 0 0 0 2px rgba(7, 102, 255, 0.2);
 }
 </style>
