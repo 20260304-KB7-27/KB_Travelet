@@ -1127,69 +1127,6 @@
       "memo": "다이소",
       "id": 1776042750482,
       "userId": "1"
-    },
-    {
-      "date": "2026-03-10",
-      "type": "income",
-      "category": "식비/카페",
-      "amount": 3000000,
-      "memo": "월급",
-      "id": 1776042933381,
-      "userId": "1"
-    },
-    {
-      "date": "2026-03-03",
-      "type": "expense",
-      "category": "식비/카페",
-      "amount": 333333,
-      "memo": "",
-      "id": 1776043616121,
-      "userId": "1"
-    },
-    {
-      "date": "2026-04-07",
-      "type": "expense",
-      "category": "식비/카페",
-      "amount": null,
-      "memo": "ㅇㅇㅇ",
-      "id": 1776047294674,
-      "userId": "1"
-    },
-    {
-      "date": "2026-04-13",
-      "type": "expense",
-      "category": "식비/카페",
-      "amount": 2000,
-      "memo": "",
-      "id": 1776048369958,
-      "userId": "1"
-    },
-    {
-      "date": "2026-04-14",
-      "type": "income",
-      "category": "식비/카페",
-      "amount": 2000,
-      "memo": "",
-      "id": 1776048596981,
-      "userId": "1"
-    },
-    {
-      "date": "2026-04-14",
-      "type": "expense",
-      "category": "식비/카페",
-      "amount": 5555,
-      "memo": "ㅇㅇㅇㅇ",
-      "id": 1776048605218,
-      "userId": "1"
-    },
-    {
-      "date": "2026-04-06",
-      "type": "income",
-      "category": "식비/카페",
-      "amount": 9000,
-      "memo": "ㅇㅇ",
-      "id": 1776052393702,
-      "userId": "1"
     }
   ],
   "profiles": [
@@ -1215,7 +1152,9 @@
       "monthlyPhone": 60000,
       "monthlyTransport": 60000,
       "monthlySubscription": 45000,
-      "monthlyOtherFixed": 0
+      "monthlyOtherFixed": 0,
+      "country": "일본",
+      "continent": "아시아"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
